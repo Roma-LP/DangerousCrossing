@@ -7,9 +7,11 @@ namespace _DangerousCrossing.Scripts.Player
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private Rigidbody _rigidbody;
-
+        
         private IInputReader _input;
         private Vector2 _moveInput;
+        
+        public IInputReader InputReader => _input;
 
         public void Init(IInputReader input)
         {

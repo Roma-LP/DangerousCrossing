@@ -1,4 +1,4 @@
-﻿using _DangerousCrossing.Scripts.UI;
+﻿using _DangerousCrossing.Scripts.Interfaces;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Player
@@ -7,16 +7,15 @@ namespace _DangerousCrossing.Scripts.Player
     {
         [SerializeField] private PlayerInputHandler _playerInputHandler;
         [SerializeField] private PersonAnimationController _personAnimationController;
-        [SerializeField] private TouchInputReader _inputSource;
 
-        private void Awake()
+        public void Init(IInputReader input)
         {
-            _playerInputHandler.Init(_inputSource);
+            _playerInputHandler.Init(input);
         }
 
         private void Update()
         {
-            _personAnimationController.SetSpeed(_inputSource.Direction);
+            _personAnimationController.SetSpeed(_playerInputHandler.InputReader.Direction);
         }
 
         private void FixedUpdate()
