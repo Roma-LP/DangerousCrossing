@@ -1,5 +1,5 @@
-using System;
 using _DangerousCrossing.Scripts.ChestLockCore;
+using _DangerousCrossing.Scripts.Enemy;
 using _DangerousCrossing.Scripts.GameSystems;
 using _DangerousCrossing.Scripts.GameSystems.DialogServiceCore;
 using _DangerousCrossing.Scripts.ObstacleLineCore;
@@ -14,9 +14,11 @@ public class SceneContext : MonoBehaviour
     [SerializeField] private ObstacleLineContext _obstacleLineContext;
     [SerializeField] private PlayerSpawnContext _playerSpawnContext;
     [SerializeField] private DialogService _dialogService;
+    [SerializeField] private EnemySpawnContext _enemySpawnContext;
+    [SerializeField] private EndObstacleLineZone _endObstacleLineZone;
 
     public TouchInputReader TouchInputReader => _touchInputReader;
-    
+
     private GamePlaySceneHandler _gamePlaySceneHandler;
 
     private void Awake()
@@ -39,7 +41,9 @@ public class SceneContext : MonoBehaviour
     {
         _obstacleLineContext.Init();
         _playerSpawnContext.Init(TouchInputReader);
-        _gamePlaySceneHandler = new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext);
+        _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance);
+        _gamePlaySceneHandler =
+            new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone, _enemySpawnContext);
     }
 
     private void OnDestroy()

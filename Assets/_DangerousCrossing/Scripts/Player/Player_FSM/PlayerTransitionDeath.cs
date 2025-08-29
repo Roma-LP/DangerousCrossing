@@ -21,7 +21,7 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
 
         private void HealthZeroHandler()
         {
-            NeedTransit = true;
+            SetNeedTransit();
         }
     }
 }

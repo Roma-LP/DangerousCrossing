@@ -856,6 +856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5893871000048814372}
+  - component: {fileID: 4788685333841556684}
   - component: {fileID: 8189180358219140037}
   m_Layer: 0
   m_Name: Stickman_heads_sphere
@@ -881,6 +882,19 @@ Transform:
   - {fileID: 8937557281591651415}
   m_Father: {fileID: 1952809212284737113}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &4788685333841556684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7107739105956027994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65fe31684504f3b9c9ffbcf7fe6cfb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8189180358219140037}
 --- !u!95 &8189180358219140037
 Animator:
   serializedVersion: 5
@@ -1246,7 +1260,6 @@ GameObject:
   - component: {fileID: 1952809212284737113}
   - component: {fileID: 210759846671902705}
   - component: {fileID: 1489150669962555190}
-  - component: {fileID: 1767820290112784191}
   - component: {fileID: 4808083401135515551}
   - component: {fileID: 6561631703430210149}
   - component: {fileID: 2292012419914441647}
@@ -1292,7 +1305,7 @@ MonoBehaviour:
   _maxHealth: 100
   _pivotUI: {fileID: 0}
   _playerInputHandler: {fileID: 1489150669962555190}
-  _personAnimationController: {fileID: 1767820290112784191}
+  _personAnimationController: {fileID: 4788685333841556684}
   _playerFsm: {fileID: 2292012419914441647}
 --- !u!114 &1489150669962555190
 MonoBehaviour:
@@ -1308,19 +1321,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _rigidbody: {fileID: 4808083401135515551}
---- !u!114 &1767820290112784191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9170776898787913501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a65fe31684504f3b9c9ffbcf7fe6cfb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8189180358219140037}
 --- !u!54 &4808083401135515551
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1425,7 +1425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
-  _playerAnimationController: {fileID: 1767820290112784191}
+  _playerAnimationController: {fileID: 4788685333841556684}
   _playerInputHandler: {fileID: 1489150669962555190}
   _capsuleCollider: {fileID: 6561631703430210149}
   _rigidbody: {fileID: 4808083401135515551}

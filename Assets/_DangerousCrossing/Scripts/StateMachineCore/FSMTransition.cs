@@ -7,7 +7,7 @@ namespace _DangerousCrossing.Scripts.StateMachineCore
         [SerializeField] private FSMState _targetState;
         
         public FSMState TargetState => _targetState;
-        public bool NeedTransit { get; protected set; }
+        public bool NeedTransit { get; private set; }
 
         public virtual void Init()
         {
@@ -16,6 +16,11 @@ namespace _DangerousCrossing.Scripts.StateMachineCore
         protected virtual void OnEnable()
         {
             NeedTransit = false;
+        }
+
+        protected void SetNeedTransit()
+        {
+            NeedTransit = true;
         }
     }
 }
