@@ -1,4 +1,5 @@
-﻿using _DangerousCrossing.Scripts.Utilities;
+﻿using _DangerousCrossing.Scripts.Interfaces;
+using _DangerousCrossing.Scripts.Utilities;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.ObstacleLineCore
@@ -15,6 +16,14 @@ namespace _DangerousCrossing.Scripts.ObstacleLineCore
         public void Despawn()
         {
             _pool.ReturnToPool(this);
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.TryGetComponent(out IDamageable iDamageable))
+            {
+                iDamageable.TakeHealthZero();
+            }
         }
     }
 }

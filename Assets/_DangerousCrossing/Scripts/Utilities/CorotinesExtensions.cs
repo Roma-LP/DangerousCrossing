@@ -6,12 +6,12 @@ namespace _DangerousCrossing.Scripts.Utilities
 {
     public static class CoroutinesExtensions
     {
-        public static void UniversalWait(this MonoBehaviour monoBehaviour, float waitTime, Action action)
+        public static void StartCoroutineUniversalWait(this MonoBehaviour monoBehaviour, float waitTime, Action action)
         {
-            monoBehaviour.StartCoroutine(_UniversalWait(waitTime, action));
+            monoBehaviour.StartCoroutine(UniversalWait(waitTime, action));
         }
 
-        private static IEnumerator _UniversalWait(float waitTime, Action action)
+        private static IEnumerator UniversalWait(float waitTime, Action action)
         {
             yield return new WaitForSeconds(waitTime);
             action();

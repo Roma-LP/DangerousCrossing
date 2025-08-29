@@ -5,17 +5,28 @@ namespace _DangerousCrossing.Scripts.Player
 {
     public class PlayerSpawnContext : MonoBehaviour
     {
-        [SerializeField] private PlayerUnit _playerUnit;
+        [SerializeField] private PlayerPerson playerPerson;
         [SerializeField] private Transform _spawnPoint;
         
-        private PlayerUnit _playerUnitInstance;
+        private PlayerPerson _playerPersonInstance;
         
-        public PlayerUnit PlayerUnitInstance  => _playerUnitInstance;
+        public PlayerPerson PlayerPersonInstance  => _playerPersonInstance;
 
         public void Init(IInputReader input)
         {
-            _playerUnitInstance = Instantiate(_playerUnit, _spawnPoint.position, Quaternion.identity);
-            _playerUnitInstance.Init(input);
+            SpawnPlayer();
+            _playerPersonInstance.Init(input);
+        }
+
+        public void SpawnPlayer()
+        {
+            if (_playerPersonInstance == null)
+            {
+                _playerPersonInstance = Instantiate(playerPerson, _spawnPoint.position, Quaternion.identity);
+            }
+            
+            _playerPersonInstance.transform.position = _spawnPoint.position;
+            _playerPersonInstance.SpawnPlayer();
         }
     }
 }

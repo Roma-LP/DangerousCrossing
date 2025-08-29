@@ -10,6 +10,7 @@ namespace _DangerousCrossing.Scripts.Player
         
         private IInputReader _input;
         private Vector2 _moveInput;
+        private bool _isCanMove = true;
         
         public IInputReader InputReader => _input;
 
@@ -23,11 +24,19 @@ namespace _DangerousCrossing.Scripts.Player
 
         public void UpdateInput()
         {
+            if (!_isCanMove)
+                return;
+            
             Vector2 inputDir = _input.Direction;
             Vector3 move = new Vector3(inputDir.x, 0, inputDir.y);
 
             Vector3 velocity = move.normalized * _speed;
             _rigidbody.velocity = new Vector3(velocity.x, _rigidbody.velocity.y, velocity.z);
+        }
+
+        public void SetMovePossible(bool isCanMove)
+        {
+            _isCanMove = isCanMove;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
                 .RemoveShownHandler(OnDialogShown)
                 .RemoveHiddenHandler(OnDialogHidden);
 
-            this.UniversalWait(GameConstants.WAIT_TIME_BEFORE_CLEAR_MEMORY, ClearMemory);
+            this.StartCoroutineUniversalWait(GameConstants.WAIT_TIME_BEFORE_CLEAR_MEMORY, ClearMemory);
         }
         
         private bool Contains(Type dialogType) => _activeDialogTypes.Contains(dialogType);
