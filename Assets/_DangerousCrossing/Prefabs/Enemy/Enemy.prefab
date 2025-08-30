@@ -955,7 +955,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -978,7 +978,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.4
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.92, z: 0}
@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 5987902369810835544}
-  enemyPerson: {fileID: 6321420234258594903}
+  _delayBeforeTransition: 3
 --- !u!114 &5987902369810835544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1066,7 +1066,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
-  enemyPerson: {fileID: 6321420234258594903}
+  _enemyPerson: {fileID: 6321420234258594903}
+  _delayBeforeRemove: 3
+  _capsuleCollider: {fileID: 3925497629975131133}
+  _rigidbody: {fileID: 8709851030569161109}
 --- !u!1 &6300147242762593651
 GameObject:
   m_ObjectHideFlags: 0

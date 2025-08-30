@@ -12,10 +12,10 @@ namespace _DangerousCrossing.Scripts.Player
         
         public PlayerPerson PlayerPersonInstance  => _playerPersonInstance;
 
-        public void Init(IInputReader input)
+        public void Init(IInputReader input, Transform cameraTransform)
         {
             SpawnPlayer();
-            _playerPersonInstance.Init(input);
+            _playerPersonInstance.Init(input, cameraTransform);
         }
 
         public void SpawnPlayer()

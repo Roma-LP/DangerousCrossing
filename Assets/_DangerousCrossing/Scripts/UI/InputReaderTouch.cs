@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace _DangerousCrossing.Scripts.UI
 {
-    public class TouchInputReader : MonoBehaviour, IInputReader, IPointerDownHandler, IDragHandler, IPointerUpHandler
+    public class InputReaderTouch : MonoBehaviour, IInputReader, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
         private bool _isPressed;
         private Vector2 _direction;

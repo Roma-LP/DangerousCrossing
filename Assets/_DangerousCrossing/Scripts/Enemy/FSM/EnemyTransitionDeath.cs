@@ -11,18 +11,17 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
         {
             base.OnEnable();
 
-            enemyPerson.OnHealthChanged += HealthChangedHandler;
+            enemyPerson.OnHealthZero += HealthChangedHandler;
         }
 
         private void OnDisable()
         {
-            enemyPerson.OnHealthChanged -= HealthChangedHandler;
+            enemyPerson.OnHealthZero -= HealthChangedHandler;
         }
 
-        private void HealthChangedHandler(float currentHealth, float maxHealth)
+        private void HealthChangedHandler()
         {
-            if (currentHealth <= 0f)
-                SetNeedTransit();
+            SetNeedTransit();
         }
     }
 }

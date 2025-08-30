@@ -10,14 +10,16 @@ using UnityEngine;
 
 public class SceneContext : MonoBehaviour
 {
-    [SerializeField] private TouchInputReader _touchInputReader;
+    [SerializeField] private InputReaderTouch _inputReaderTouch;
+    [SerializeField] private InputReaderJoystick _inputReaderJoystick;
     [SerializeField] private ObstacleLineContext _obstacleLineContext;
     [SerializeField] private PlayerSpawnContext _playerSpawnContext;
     [SerializeField] private DialogService _dialogService;
     [SerializeField] private EnemySpawnContext _enemySpawnContext;
     [SerializeField] private EndObstacleLineZone _endObstacleLineZone;
+    [SerializeField] private CamerasContext _camerasContext;
 
-    public TouchInputReader TouchInputReader => _touchInputReader;
+    //public InputReaderTouch InputReaderTouch => _inputReaderTouch;
 
     private GamePlaySceneHandler _gamePlaySceneHandler;
 
@@ -30,6 +32,7 @@ public class SceneContext : MonoBehaviour
     private void Start()
     {
         _gamePlaySceneHandler.StartGamePlayScene();
+        _camerasContext.SetFollowCamera(_playerSpawnContext.PlayerPersonInstance.transform);
     }
 
     private void ApplicationSettings()
@@ -40,7 +43,7 @@ public class SceneContext : MonoBehaviour
     private void Bootstrapper()
     {
         _obstacleLineContext.Init();
-        _playerSpawnContext.Init(TouchInputReader);
+        _playerSpawnContext.Init(_inputReaderJoystick, _camerasContext.PlayerCamera.transform);
         _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance);
         _gamePlaySceneHandler =
             new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone, _enemySpawnContext);

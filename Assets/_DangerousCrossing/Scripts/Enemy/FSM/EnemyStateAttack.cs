@@ -1,4 +1,5 @@
-﻿using _DangerousCrossing.Scripts.StateMachineCore;
+﻿using _DangerousCrossing.Scripts.Interfaces;
+using _DangerousCrossing.Scripts.StateMachineCore;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Enemy.FSM
@@ -14,6 +15,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
         private float _cooldownTimer;
         private bool _isAttackAnimationIsPlaying;
         private bool _isInAttackDistance;
+        private IDamageable _damageablePerson;
 
         private void OnEnable()
         {
@@ -24,14 +26,16 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             _attackCooldown = _enemyPerson.EnemySpawnLinks.AttackCooldown;
             _attackDamage = _enemyPerson.EnemySpawnLinks.AttackDamage;
 
-            _enemyPerson.EnemyEnemyAnimationController.OnAttackAnimationEnd += AttackEnemyAnimationControllerEndHandler;
-            _enemyPerson.EnemyEnemyAnimationController.OnAttackMoment += AttackMomentHandler;
+            _damageablePerson = _enemyPerson.PlayerPerson.GetComponent<IDamageable>();
+
+            _enemyPerson.EnemyAnimationController.OnAttackAnimationEnd += AttackEnemyAnimationControllerEndHandler;
+            _enemyPerson.EnemyAnimationController.OnAttackMoment += AttackMomentHandler;
         }
 
         private void OnDisable()
         {
-            _enemyPerson.EnemyEnemyAnimationController.OnAttackAnimationEnd -= AttackEnemyAnimationControllerEndHandler;
-            _enemyPerson.EnemyEnemyAnimationController.OnAttackMoment -= AttackMomentHandler;
+            _enemyPerson.EnemyAnimationController.OnAttackAnimationEnd -= AttackEnemyAnimationControllerEndHandler;
+            _enemyPerson.EnemyAnimationController.OnAttackMoment -= AttackMomentHandler;
         }
 
         public override void UpdateState()
@@ -42,6 +46,8 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             float distance = Vector3.Distance(_enemyPerson.transform.position,
                 _enemyPerson.PlayerPerson.transform.position);
 
+            Debug.Log($"dist: {distance}");
+            
             if (distance > _attackDistance)
             {
                 _enemyPerson.MoveTo(_enemyPerson.PlayerPerson.transform.position);
@@ -66,7 +72,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
         private void StartAttack()
         {
             _isAttackAnimationIsPlaying = true;
-            _enemyPerson.EnemyEnemyAnimationController.SetAttack();
+            _enemyPerson.EnemyAnimationController.SetAttack();
         }
 
         private void AttackEnemyAnimationControllerEndHandler()
@@ -80,7 +86,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             if (_isInAttackDistance == false)
                 return;
 
-            _enemyPerson.PlayerPerson.TakeDamage(_attackDamage);
+            _damageablePerson.TakeDamage(_attackDamage);
         }
     }
 }

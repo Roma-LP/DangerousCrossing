@@ -11,9 +11,9 @@ namespace _DangerousCrossing.Scripts.Player
         [SerializeField] private PlayerAnimationController _personAnimationController;
         [SerializeField] private PlayerFSM _playerFsm;
 
-        public void Init(IInputReader input)
+        public void Init(IInputReader input, Transform cameraTransform)
         {
-            _playerInputHandler.Init(input);
+            _playerInputHandler.Init(input,  cameraTransform);
         }
 
         public void SpawnPlayer()

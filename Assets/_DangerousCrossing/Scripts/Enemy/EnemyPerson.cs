@@ -1,4 +1,5 @@
-﻿using _DangerousCrossing.Scripts.Interfaces;
+﻿using System;
+using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.Person;
 using _DangerousCrossing.Scripts.Player;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.AI;
 
 namespace _DangerousCrossing.Scripts.Enemy
 {
-    public class EnemyPerson : PersonBase, ISpawnable<EnemySpawnLinks>
+    public class EnemyPerson : PersonBase, ISpawnable<EnemySpawnLinks>, IRemovable<EnemyPerson>
     {
         [SerializeField] private EnemyAnimationController _enemyAnimationController;
         [SerializeField] private NavMeshAgent _agent;
@@ -15,9 +16,11 @@ namespace _DangerousCrossing.Scripts.Enemy
         private PlayerPerson _playerPerson;
         private EnemySpawnLinks _enemySpawnLinks;
         
+        public event Action<EnemyPerson> OnRemoveble;
+         
         public NavMeshAgent Agent => _agent;
         public PlayerPerson PlayerPerson => _playerPerson;
-        public EnemyAnimationController EnemyEnemyAnimationController => _enemyAnimationController;
+        public EnemyAnimationController EnemyAnimationController => _enemyAnimationController;
         public EnemySpawnLinks EnemySpawnLinks => _enemySpawnLinks;
 
         protected override void Awake()
@@ -47,6 +50,13 @@ namespace _DangerousCrossing.Scripts.Enemy
         public void OnSpawned(EnemySpawnLinks parametrs)
         {
             _enemySpawnLinks = parametrs;
+            _playerPerson = _enemySpawnLinks.PlayerPerson;
+            _enemyFsm.StartFSM();
+        }
+
+        public void NeedRemove()
+        {
+            OnRemoveble?.Invoke(this);
         }
     }
 }

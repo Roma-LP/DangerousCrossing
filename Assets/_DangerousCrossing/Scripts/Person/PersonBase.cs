@@ -28,7 +28,10 @@ namespace _DangerousCrossing.Scripts.Person
                 _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
 
                 OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-               // _healthBarUI.SetHealth(_currentHealth);
+
+                if (_currentHealth == 0)
+                    OnHealthZero?.Invoke();
+                // _healthBarUI.SetHealth(_currentHealth);
             }
         }
 
@@ -41,7 +44,7 @@ namespace _DangerousCrossing.Scripts.Person
             //_healthBarUI = SceneContext.Instance.WorldHpBarSpawner.CreateHpBar(_currentHealth, _maxHealth);
             //_worldToUIFollower = new WorldToUIFollower(_healthBarUI.RectTransformToMove, _pivotUI);
         }
-        
+
         protected virtual void SetInitialHealth()
         {
             _currentHealth = _maxHealth;
@@ -54,8 +57,8 @@ namespace _DangerousCrossing.Scripts.Person
 
         protected virtual void OnDestroy()
         {
-           // if (_healthBarUI != null)
-               // Destroy(_healthBarUI.gameObject);
+            // if (_healthBarUI != null)
+            // Destroy(_healthBarUI.gameObject);
         }
 
         public void TakeDamage(float amount)
@@ -66,8 +69,9 @@ namespace _DangerousCrossing.Scripts.Person
 
         public void TakeHealthZero()
         {
-            CurrentHealth = 0;
-            OnHealthZero?.Invoke();
+            //CurrentHealth = 0;
+            //OnHealthZero?.Invoke();
+            TakeDamage(CurrentHealth);
         }
     }
 }

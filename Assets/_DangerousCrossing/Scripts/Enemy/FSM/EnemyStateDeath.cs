@@ -1,17 +1,23 @@
 ﻿using _DangerousCrossing.Scripts.StateMachineCore;
+using _DangerousCrossing.Scripts.Utilities;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Enemy.FSM
 {
     public class EnemyStateDeath : FSMState
     {
-        [SerializeField] private EnemyPerson enemyPerson;
+        [SerializeField] private EnemyPerson _enemyPerson;
+        [SerializeField] private float _delayBeforeRemove = 3f;
+        [SerializeField] private CapsuleCollider _capsuleCollider;
+        [SerializeField] private Rigidbody _rigidbody;
 
         private void OnEnable()
         {
-            
-            
-            Destroy(gameObject);
+            _enemyPerson.EnemyAnimationController.SetDeath();
+            _enemyPerson.StopMoving();
+            _rigidbody.isKinematic = true;
+            _capsuleCollider.enabled = false;
+            this.StartCoroutineUniversalWait(_delayBeforeRemove, _enemyPerson.NeedRemove);
         }
     }
 }

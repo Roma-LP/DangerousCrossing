@@ -36,6 +36,8 @@ namespace _DangerousCrossing.Scripts.GameSystems
         private void HealthPlayerZeroHandler()
         {
             _playerPersonInstance.StartCoroutineUniversalWait(_waitTimeToSpawnPlayer, NeedSpawnPlayer);
+            _enemySpawnContext.DeSpawnPerson();
+            _endObstacleLineZone.OnPlayerInEndZone += PlayerInEndZoneHandler;
         }
 
         private void NeedSpawnPlayer()

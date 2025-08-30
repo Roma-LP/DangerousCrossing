@@ -7,7 +7,8 @@ namespace _DangerousCrossing.Scripts.Enemy
     public class EnemySpawnContext : SpawnerBase<EnemyPerson, EnemySpawnLinks>
     {
         [Header("AttackSettings")]
-        [SerializeField] private float _attackDistance = 0.3f;
+        [SerializeField] private float _attackDistance = 0.8f;
+
         [SerializeField] private float _attackCooldown = 3f;
         [SerializeField] private float _attackDamage = 25f;
 
@@ -21,6 +22,17 @@ namespace _DangerousCrossing.Scripts.Enemy
         public override void SpawnPerson()
         {
             SpawnFromConfig(_enemySpawnLinks);
+        }
+
+        public void DeSpawnPerson()
+        {
+            for (var i = 0; i < _spawnedObjects.Count; i++)
+            {
+                if (_spawnedObjects[i] != null)
+                    Destroy(_spawnedObjects[i].gameObject);
+            }
+
+            _spawnedObjects.Clear();
         }
     }
 }
