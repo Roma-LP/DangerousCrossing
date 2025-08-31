@@ -44,9 +44,10 @@ public class SceneContext : MonoBehaviour
     {
         _obstacleLineContext.Init();
         _playerSpawnContext.Init(_inputReaderJoystick, _camerasContext.PlayerCamera.transform);
-        _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance);
+        _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance, _camerasContext.PlayerCamera.transform);
         _gamePlaySceneHandler =
-            new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone, _enemySpawnContext);
+            new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone,
+                _enemySpawnContext);
     }
 
     private void OnDestroy()

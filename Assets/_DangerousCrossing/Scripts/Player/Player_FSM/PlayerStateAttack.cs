@@ -95,6 +95,9 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
 
         private void AttackMoment()
         {
+            if (_currentTarget == null)
+                return;
+            
             _currentTarget.TakeDamage(_attackDamage);
         }
 

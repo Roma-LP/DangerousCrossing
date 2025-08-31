@@ -14,13 +14,14 @@ namespace _DangerousCrossing.Scripts.Player
         public void Init(IInputReader input, Transform cameraTransform)
         {
             _playerInputHandler.Init(input,  cameraTransform);
+            InitHealthBar(cameraTransform);
         }
 
-        public void SpawnPlayer()
+        public void OnSpawnedPlayer()
         {
-            SetInitialHealth();
             _playerFsm.StartFSM();
             _personAnimationController.SetRespawn();
+            ResetCurrentHealth();
         }
 
         private void Update()

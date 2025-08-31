@@ -14,19 +14,16 @@ namespace _DangerousCrossing.Scripts.Player
 
         public void Init(IInputReader input, Transform cameraTransform)
         {
-            SpawnPlayer();
+            _playerPersonInstance = Instantiate(playerPerson, _spawnPoint.position, Quaternion.identity);
             _playerPersonInstance.Init(input, cameraTransform);
+            
+            //ResetPlayerOnStartPoint();
         }
 
-        public void SpawnPlayer()
+        public void ResetPlayerOnStartPoint()
         {
-            if (_playerPersonInstance == null)
-            {
-                _playerPersonInstance = Instantiate(playerPerson, _spawnPoint.position, Quaternion.identity);
-            }
-            
             _playerPersonInstance.transform.position = _spawnPoint.position;
-            _playerPersonInstance.SpawnPlayer();
+            _playerPersonInstance.OnSpawnedPlayer();
         }
     }
 }

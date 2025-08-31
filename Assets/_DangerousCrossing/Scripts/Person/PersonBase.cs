@@ -9,10 +9,9 @@ namespace _DangerousCrossing.Scripts.Person
     {
         [ShowInInspector, ReadOnly] protected float _currentHealth;
         [SerializeField] private float _maxHealth = 100f;
-        [SerializeField] private Transform _pivotUI;
+        [SerializeField] private HealthBarUI _healthBarUI;
         //[SerializeField] private HitFlashEffect _hitFlashEffect;
 
-        //private HealthBarUI _healthBarUI;
         //private WorldToUIFollower _worldToUIFollower;
 
         public event Action<float, float> OnHealthChanged;
@@ -31,7 +30,8 @@ namespace _DangerousCrossing.Scripts.Person
 
                 if (_currentHealth == 0)
                     OnHealthZero?.Invoke();
-                // _healthBarUI.SetHealth(_currentHealth);
+                
+                _healthBarUI.SetHealth(_currentHealth, _maxHealth);
             }
         }
 
@@ -45,14 +45,20 @@ namespace _DangerousCrossing.Scripts.Person
             //_worldToUIFollower = new WorldToUIFollower(_healthBarUI.RectTransformToMove, _pivotUI);
         }
 
-        protected virtual void SetInitialHealth()
+        protected virtual void InitHealthBar(Transform cameraTransform)
+        {
+            _healthBarUI.Init(cameraTransform);
+        }
+        
+        protected virtual void ResetCurrentHealth()
         {
             _currentHealth = _maxHealth;
+            _healthBarUI.SetHealth(_currentHealth, _maxHealth, false);
         }
 
         protected virtual void LateUpdate()
         {
-            //_worldToUIFollower.LateUpdateUIFollower();
+            _healthBarUI.OnLateUpdate();
         }
 
         protected virtual void OnDestroy()

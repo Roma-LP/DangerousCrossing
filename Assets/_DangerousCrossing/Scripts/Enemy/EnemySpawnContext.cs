@@ -14,9 +14,9 @@ namespace _DangerousCrossing.Scripts.Enemy
 
         private EnemySpawnLinks _enemySpawnLinks;
 
-        public void Init(PlayerPerson playerPerson)
+        public void Init(PlayerPerson playerPerson, Transform cameraTransform)
         {
-            _enemySpawnLinks = new EnemySpawnLinks(_attackDistance, _attackCooldown, _attackDamage, playerPerson);
+            _enemySpawnLinks = new EnemySpawnLinks(_attackDistance, _attackCooldown, _attackDamage, playerPerson, cameraTransform);
         }
 
         public override void SpawnPerson()

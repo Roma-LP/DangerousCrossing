@@ -22,14 +22,7 @@ namespace _DangerousCrossing.Scripts.Enemy
         public PlayerPerson PlayerPerson => _playerPerson;
         public EnemyAnimationController EnemyAnimationController => _enemyAnimationController;
         public EnemySpawnLinks EnemySpawnLinks => _enemySpawnLinks;
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            //_playerPerson = SceneContext.Instance.PlayerUnit;
-        }
-
+        
         private void Update()
         {
             _enemyFsm.UpdateFSM();
@@ -52,7 +45,8 @@ namespace _DangerousCrossing.Scripts.Enemy
             _enemySpawnLinks = parametrs;
             _playerPerson = _enemySpawnLinks.PlayerPerson;
             _enemyFsm.StartFSM();
-            SetInitialHealth();
+            InitHealthBar(_enemySpawnLinks.CameraTransform);
+            ResetCurrentHealth();
         }
 
         public void NeedRemove()

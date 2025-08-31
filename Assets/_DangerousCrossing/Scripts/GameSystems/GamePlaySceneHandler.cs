@@ -42,7 +42,7 @@ namespace _DangerousCrossing.Scripts.GameSystems
 
         private void NeedSpawnPlayer()
         {
-            _playerSpawnContext.SpawnPlayer();
+            _playerSpawnContext.ResetPlayerOnStartPoint();
         }
 
         private void PlayerInEndZoneHandler()
