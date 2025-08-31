@@ -46,7 +46,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             float distance = Vector3.Distance(_enemyPerson.transform.position,
                 _enemyPerson.PlayerPerson.transform.position);
 
-            Debug.Log($"dist: {distance}");
+            //Debug.Log($"dist: {distance}");
             
             if (distance > _attackDistance)
             {

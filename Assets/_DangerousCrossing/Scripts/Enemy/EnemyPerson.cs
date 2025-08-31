@@ -52,6 +52,7 @@ namespace _DangerousCrossing.Scripts.Enemy
             _enemySpawnLinks = parametrs;
             _playerPerson = _enemySpawnLinks.PlayerPerson;
             _enemyFsm.StartFSM();
+            SetInitialHealth();
         }
 
         public void NeedRemove()
