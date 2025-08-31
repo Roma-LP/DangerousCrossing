@@ -1,0 +1,34 @@
+﻿using System.Collections.Generic;
+using _DangerousCrossing.Scripts.Enums;
+using _DangerousCrossing.Scripts.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace _DangerousCrossing.Scripts.ChestLockCore
+{
+    public class ChestLockKeysGridPanel : MonoBehaviour
+    {
+        [SerializeField] private GridLayoutGroup grid;
+        [SerializeField] private ChestLockKeyUIElement keyPrefab;
+        [SerializeField] private ChestLockKeysGridCell _gridCell;
+        [SerializeField] private RectTransform _keysContainer;
+
+        private ChestLockKeyConfigContainer _configContainer;
+        
+        public void Init(ChestLockKeyConfigContainer configContainer)
+        {
+            _configContainer = configContainer;
+        }
+
+        public void InstantiateGridWithKeys(ChestLockKeyType[] keysToSpawn)
+        {
+            foreach (ChestLockKeyType lockKeyType in keysToSpawn)
+            {
+                ChestLockKeysGridCell cell = Instantiate(_gridCell, grid.transform);
+                ChestLockKeyUIElement key = Instantiate(keyPrefab);
+                key.Init(_configContainer.GetKeyConfigByKeyType(lockKeyType), _keysContainer, cell);
+                cell.SetKey(key);
+            }
+        }
+    }
+}

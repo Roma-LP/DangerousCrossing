@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2947df8e8f4e4069aeda1707bee6484e, type: 3}
+  m_Name: _ChestLockKeyConfigContainer
+  m_EditorClassIdentifier: 
+  _chestLockKeyConfigs:
+  - {fileID: 11400000, guid: 6587ac14af6bdee4a8a5827a970d94b5, type: 2}
+  - {fileID: 11400000, guid: 0770b21aedd61fa46a6a85208b4cf112, type: 2}
+  - {fileID: 11400000, guid: 5ca25239f05a66b4099d552da6313525, type: 2}
+  - {fileID: 11400000, guid: 3805781b6a9866144b89ce624549dad4, type: 2}
+  - {fileID: 11400000, guid: 6862c17af7f2ee74caf995b196fa75ef, type: 2}

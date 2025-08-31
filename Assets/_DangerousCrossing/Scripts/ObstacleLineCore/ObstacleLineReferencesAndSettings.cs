@@ -15,7 +15,7 @@ namespace _DangerousCrossing.Scripts.ObstacleLineCore
         [SerializeField] private Transform _container;
         
         [Header("Settings")]
-        [SerializeField] private LineDirection _lineDirection = LineDirection.LeftToRight;
+        [SerializeField] private ObstacleLineDirection obstacleLineDirection = ObstacleLineDirection.LeftToRight;
         [SerializeField] private int _poolSize = 5;
         [SerializeField] private float _spawnInterval = 2f;
         [SerializeField] private float _moveDuration = 5f;
@@ -26,7 +26,7 @@ namespace _DangerousCrossing.Scripts.ObstacleLineCore
         public Transform RightPoint => _rightPoint;
         public Transform Container => _container;
 
-        public LineDirection LineDirection => _lineDirection;
+        public ObstacleLineDirection ObstacleLineDirection => obstacleLineDirection;
         public int PoolSize => _poolSize;
         public float SpawnInterval => _spawnInterval;
         public float MoveDuration => _moveDuration;

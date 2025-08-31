@@ -53,13 +53,13 @@ namespace _DangerousCrossing.Scripts.ObstacleLineCore
 
         private void SetStartEndPoints()
         {
-            switch (_obstacleLineReferencesAndSettings.LineDirection)
+            switch (_obstacleLineReferencesAndSettings.ObstacleLineDirection)
             {
-                case LineDirection.LeftToRight:
+                case ObstacleLineDirection.LeftToRight:
                     _startPoint = _obstacleLineReferencesAndSettings.LeftPoint;
                     _endPoint = _obstacleLineReferencesAndSettings.RightPoint;
                     break;
-                case LineDirection.RightToLeft:
+                case ObstacleLineDirection.RightToLeft:
                     _startPoint = _obstacleLineReferencesAndSettings.RightPoint;
                     _endPoint = _obstacleLineReferencesAndSettings.LeftPoint;
                     break;
