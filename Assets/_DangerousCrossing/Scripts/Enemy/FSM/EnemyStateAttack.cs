@@ -75,6 +75,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
         {
             _isAttackAnimationIsPlaying = true;
             _enemyPerson.EnemyAnimationController.SetAttack();
+            _enemyPerson.RotateTowardsTarget(_enemyPerson.PlayerPerson.transform);
         }
 
         private void AttackEnemyAnimationControllerEndHandler()

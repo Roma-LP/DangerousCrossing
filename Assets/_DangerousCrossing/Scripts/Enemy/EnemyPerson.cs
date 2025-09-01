@@ -26,7 +26,7 @@ namespace _DangerousCrossing.Scripts.Enemy
         private void Update()
         {
             _enemyFsm.UpdateFSM();
-            _enemyAnimationController.SetSpeed(new Vector2(_agent.velocity.x, _agent.velocity.y));
+            _enemyAnimationController.SetSpeed(new Vector2(_agent.velocity.x, _agent.velocity.z));
         }
 
         public void MoveTo(Vector3 target)

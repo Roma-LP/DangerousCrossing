@@ -1,5 +1,6 @@
 ﻿using System;
 using _DangerousCrossing.Scripts.Interfaces;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -79,6 +80,20 @@ namespace _DangerousCrossing.Scripts.Person
             //CurrentHealth = 0;
             //OnHealthZero?.Invoke();
             TakeDamage(CurrentHealth);
+        }
+        
+        public void RotateTowardsTarget(Transform target, float duration = 0.2f)
+        {
+            if (target == null) return;
+        
+            Vector3 direction = target.position - transform.position;
+            direction.y = 0;
+        
+            if (direction != Vector3.zero)
+            {
+                transform.DOLookAt(transform.position + direction, duration)
+                    .SetEase(Ease.OutQuad).SetLink(gameObject);
+            }
         }
     }
 }

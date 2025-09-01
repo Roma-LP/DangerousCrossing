@@ -65,16 +65,20 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
                 {
                     if (ScanForTarget(out _currentTarget))
                     {
-                        _personAnimationController.SetAttack();
-                        RotateTowardsTarget(_currentTarget.TargetTransform);
+                        StartAttack();
                     }
                 }
                 else
                 {
-                    _personAnimationController.SetAttack();
-                    RotateTowardsTarget(_currentTarget.TargetTransform);
+                    StartAttack();
                 }
             }
+        }
+
+        private void StartAttack()
+        {
+            _personAnimationController.SetAttack();
+            _playerPerson.RotateTowardsTarget(_currentTarget.TargetTransform);
         }
 
         private bool ScanForTarget(out IDamageable target)
@@ -114,20 +118,6 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
             if (_currentTarget != null && _currentTarget.CurrentHealth <= 0f)
             {
                 _currentTarget = null;
-            }
-        }
-        
-        private void RotateTowardsTarget(Transform target, float duration = 0.3f)
-        {
-            if (target == null) return;
-        
-            Vector3 direction = target.position - transform.position;
-            direction.y = 0;
-        
-            if (direction != Vector3.zero)
-            {
-                transform.DOLookAt(transform.position + direction, duration)
-                    .SetEase(Ease.OutQuad).SetLink(gameObject);
             }
         }
 
