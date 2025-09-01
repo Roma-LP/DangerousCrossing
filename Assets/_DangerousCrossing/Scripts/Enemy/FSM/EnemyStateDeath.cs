@@ -7,7 +7,6 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
     public class EnemyStateDeath : FSMState
     {
         [SerializeField] private EnemyPerson _enemyPerson;
-        [SerializeField] private float _delayBeforeInvokeRemove = 3f;
         [SerializeField] private CapsuleCollider _capsuleCollider;
         [SerializeField] private Rigidbody _rigidbody;
 
@@ -17,7 +16,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             _enemyPerson.StopMoving();
             _rigidbody.isKinematic = true;
             _capsuleCollider.enabled = false;
-            this.StartCoroutineUniversalWait(_delayBeforeInvokeRemove, _enemyPerson.NeedRemove);
+            this.StartCoroutineUniversalWait(_enemyPerson.EnemySpawnLinks.EnemyPersonConfig.DelayBeforeInvokeRemoveInDeath, _enemyPerson.NeedRemove);
         }
     }
 }

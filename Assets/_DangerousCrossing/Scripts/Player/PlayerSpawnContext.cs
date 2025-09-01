@@ -1,4 +1,5 @@
 ﻿using _DangerousCrossing.Scripts.Interfaces;
+using _DangerousCrossing.Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Player
@@ -6,6 +7,7 @@ namespace _DangerousCrossing.Scripts.Player
     public class PlayerSpawnContext : MonoBehaviour
     {
         [SerializeField] private PlayerPerson playerPerson;
+        [SerializeField] private PlayerPersonConfig _playerPersonConfig;
         [SerializeField] private Transform _spawnPoint;
         
         private PlayerPerson _playerPersonInstance;
@@ -15,7 +17,7 @@ namespace _DangerousCrossing.Scripts.Player
         public void Init(IInputReader input, Transform cameraTransform)
         {
             _playerPersonInstance = Instantiate(playerPerson, _spawnPoint.position, Quaternion.identity);
-            _playerPersonInstance.Init(input, cameraTransform);
+            _playerPersonInstance.Init(input, cameraTransform, _playerPersonConfig);
             
             //ResetPlayerOnStartPoint();
         }

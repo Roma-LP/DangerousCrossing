@@ -1977,9 +1977,7 @@ MonoBehaviour:
   - {fileID: 256913913}
   - {fileID: 440136123}
   _isUseRandomSpawnPoints: 0
-  _attackDistance: 0.8
-  _attackCooldown: 3
-  _attackDamage: 1
+  _enemyPersonConfig: {fileID: 11400000, guid: a4fc127815b9dac4888697cd2d84d632, type: 2}
 --- !u!1 &1603939146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,6 +2292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPerson: {fileID: 210759846671902705, guid: ba63c185ac9d9f64f8c6fc9df0db53de, type: 3}
+  _playerPersonConfig: {fileID: 11400000, guid: f25377f0695b2c442a4f56a2820b4ed2, type: 2}
   _spawnPoint: {fileID: 767716613}
 --- !u!1 &2056434444
 GameObject:

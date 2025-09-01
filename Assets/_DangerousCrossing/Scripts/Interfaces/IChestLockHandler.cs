@@ -2,7 +2,7 @@
 
 namespace _DangerousCrossing.Scripts.Interfaces
 {
-    public interface IChestLockUnlocked
+    public interface IChestLockHandler
     {
         public event Action OnChestLockUnlocked;
     }

@@ -14,7 +14,6 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
 
         private float _cooldownTimer;
         private bool _isAttackAnimationIsPlaying;
-        private bool _isInAttackDistance;
         private IDamageable _damageablePerson;
 
         private void OnEnable()
@@ -22,9 +21,9 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             _cooldownTimer = 0;
             _isAttackAnimationIsPlaying = false;
 
-            _attackDistance = _enemyPerson.EnemySpawnLinks.AttackDistance;
-            _attackCooldown = _enemyPerson.EnemySpawnLinks.AttackCooldown;
-            _attackDamage = _enemyPerson.EnemySpawnLinks.AttackDamage;
+            _attackDistance = _enemyPerson.EnemySpawnLinks.EnemyPersonConfig.AttackDistance;
+            _attackCooldown = _enemyPerson.EnemySpawnLinks.EnemyPersonConfig.AttackCooldown;
+            _attackDamage = _enemyPerson.EnemySpawnLinks.EnemyPersonConfig.AttackDamage;
 
             _damageablePerson = _enemyPerson.PlayerPerson.GetComponent<IDamageable>();
 
@@ -43,20 +42,9 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
             if (_isAttackAnimationIsPlaying)
                 return;
 
-            float distance = Vector3.Distance(_enemyPerson.transform.position,
-                _enemyPerson.PlayerPerson.transform.position);
-
-            //Debug.Log($"dist: {distance}");
-            
-            if (distance > _attackDistance)
-            {
-                _enemyPerson.MoveTo(_enemyPerson.PlayerPerson.transform.position);
-                _isInAttackDistance = false;
-            }
-            else
+            if (IsAttackDistance())
             {
                 _enemyPerson.StopMoving();
-                _isInAttackDistance = true;
 
                 if (_cooldownTimer <= 0f)
                 {
@@ -67,6 +55,20 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
                     _cooldownTimer -= Time.deltaTime;
                 }
             }
+            else
+            {
+                _enemyPerson.MoveTo(_enemyPerson.PlayerPerson.transform.position);
+            }
+        }
+
+        private bool IsAttackDistance()
+        {
+            float distance = Vector3.Distance(_enemyPerson.transform.position,
+                _enemyPerson.PlayerPerson.transform.position);
+
+            //Debug.Log($"dist: {distance}");
+
+            return distance <= _attackDistance;
         }
 
         private void StartAttack()
@@ -83,7 +85,7 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
 
         private void AttackMomentHandler()
         {
-            if (_isInAttackDistance == false)
+            if (IsAttackDistance() == false)
                 return;
 
             _damageablePerson.TakeDamage(_attackDamage);

@@ -1,5 +1,6 @@
 ﻿using System;
 using _DangerousCrossing.Scripts.Player;
+using _DangerousCrossing.Scripts.ScriptableObjects;
 using _DangerousCrossing.Scripts.Utilities;
 using UnityEngine;
 
@@ -7,11 +8,7 @@ namespace _DangerousCrossing.Scripts.Enemy
 {
     public class EnemySpawnContext : SpawnerBase<EnemyPerson, EnemySpawnLinks>
     {
-        [Header("AttackSettings")]
-        [SerializeField] private float _attackDistance = 0.8f;
-
-        [SerializeField] private float _attackCooldown = 3f;
-        [SerializeField] private float _attackDamage = 25f;
+        [SerializeField] private EnemyPersonConfig _enemyPersonConfig;
 
         private EnemySpawnLinks _enemySpawnLinks;
 
@@ -19,7 +16,7 @@ namespace _DangerousCrossing.Scripts.Enemy
 
         public void Init(PlayerPerson playerPerson, Transform cameraTransform)
         {
-            _enemySpawnLinks = new EnemySpawnLinks(_attackDistance, _attackCooldown, _attackDamage, playerPerson, cameraTransform);
+            _enemySpawnLinks = new EnemySpawnLinks(playerPerson, _enemyPersonConfig, cameraTransform);
         }
 
         protected override void OnRemovableHandler(EnemyPerson spawnedObject)

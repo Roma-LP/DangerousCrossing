@@ -8,7 +8,7 @@ namespace _DangerousCrossing.Scripts.Person
     public abstract class PersonBase : MonoBehaviour, IDamageable
     {
         [ShowInInspector, ReadOnly] protected float _currentHealth;
-        [SerializeField] private float _maxHealth = 100f;
+        [ShowInInspector, ReadOnly] private float _maxHealth;
         [SerializeField] private HealthBarUI _healthBarUI;
         //[SerializeField] private HitFlashEffect _hitFlashEffect;
 
@@ -50,9 +50,10 @@ namespace _DangerousCrossing.Scripts.Person
             _healthBarUI.Init(cameraTransform);
         }
         
-        protected virtual void ResetCurrentHealth()
+        protected virtual void ResetCurrentHealth(float currentHealth, float maxHealth)
         {
-            _currentHealth = _maxHealth;
+            _currentHealth = currentHealth;
+            _maxHealth = maxHealth;
             _healthBarUI.SetHealth(_currentHealth, _maxHealth, false);
         }
 

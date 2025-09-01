@@ -9,7 +9,10 @@ namespace _DangerousCrossing.Scripts.Interfaces
         float MaxHealth { get; }
         Transform TargetTransform { get; }
 
-        event Action<float, float> OnHealthChanged; // (currentHealth, maxHealth)
+        /// <summary>
+        /// Action&lt; currentHealth, maxHealth &gt;.
+        /// </summary>
+        event Action<float, float> OnHealthChanged;
         event Action<float> OnTakeDamage;
         event Action OnHealthZero;
 

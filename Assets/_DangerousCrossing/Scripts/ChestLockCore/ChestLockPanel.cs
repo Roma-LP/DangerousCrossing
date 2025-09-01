@@ -14,7 +14,6 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         [SerializeField] private Image _lockIcon;
         [SerializeField] private TextMeshProUGUI _counterText;
         
-        private int _currentCount = 0;
         private ChestLockDragHandler _chestLockDragHandler;
 
         public event Action<ChestLockKeyUIElement> OnDropKeyUIElement;

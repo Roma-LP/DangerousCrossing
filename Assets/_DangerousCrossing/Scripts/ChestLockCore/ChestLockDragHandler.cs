@@ -4,16 +4,18 @@ using _DangerousCrossing.Scripts.Interfaces;
 
 namespace _DangerousCrossing.Scripts.ChestLockCore
 {
-    public class ChestLockDragHandler : IDisposable,  IChestLockUnlocked
+    public class ChestLockDragHandler : IDisposable
     {
-        private ChestLockPanel _chestLockPanel;
-        private ChestLockKeyType _keyToChestUnlock;
+        private readonly ChestLockPanel _chestLockPanel;
+        private readonly ChestLockKeyType _keyToChestUnlock;
+        private readonly int _countKeysToOpenLock;
+        private readonly ChestLockDialog _chestLockDialog;
         private int _currentAcceptKeysCount;
-        private int _countKeysToOpenLock;
-        private ChestLockDialog _chestLockDialog;
+        
+        private readonly Action OnChestLockUnlocked;
         
         public event Action<int, int> OnCurrentAcceptKeysCountChanged;
-        public event Action OnChestLockUnlocked;
+        
         
         public int CountKeysToOpenLock => _countKeysToOpenLock;
         public int AcceptKeysCount
@@ -27,12 +29,13 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             }
         }
         
-        public ChestLockDragHandler(ChestLockPanel chestLockPanel, ChestLockKeyType keyToChestUnlock, int countKeysToOpenLock, ChestLockDialog chestLockDialog)
+        public ChestLockDragHandler(ChestLockPanel chestLockPanel, ChestLockKeyType keyToChestUnlock, int countKeysToOpenLock, ChestLockDialog chestLockDialog, Action onChestLockUnlocked)
         {
             _chestLockPanel = chestLockPanel;
             _keyToChestUnlock = keyToChestUnlock;
             _countKeysToOpenLock =  countKeysToOpenLock;
             _chestLockDialog =  chestLockDialog;
+            OnChestLockUnlocked = onChestLockUnlocked;
             
             _chestLockPanel.OnDropKeyUIElement += DropKeyUIElementHandler;
         }

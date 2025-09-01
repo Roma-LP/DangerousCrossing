@@ -1,6 +1,7 @@
 ﻿using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.Person;
 using _DangerousCrossing.Scripts.Player.Player_FSM;
+using _DangerousCrossing.Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Player
@@ -11,9 +12,12 @@ namespace _DangerousCrossing.Scripts.Player
         [SerializeField] private PlayerAnimationController _personAnimationController;
         [SerializeField] private PlayerFSM _playerFsm;
 
-        public void Init(IInputReader input, Transform cameraTransform)
+        public PlayerPersonConfig PlayerPersonConfig { get; private set; }
+
+        public void Init(IInputReader input, Transform cameraTransform, PlayerPersonConfig playerPersonConfig)
         {
-            _playerInputHandler.Init(input,  cameraTransform);
+            PlayerPersonConfig = playerPersonConfig;
+            _playerInputHandler.Init(input,  cameraTransform, PlayerPersonConfig.MovementSpeed);
             InitHealthBar(cameraTransform);
         }
 
@@ -21,7 +25,7 @@ namespace _DangerousCrossing.Scripts.Player
         {
             _playerFsm.StartFSM();
             _personAnimationController.SetRespawn();
-            ResetCurrentHealth();
+            ResetCurrentHealth(PlayerPersonConfig.CurrentHealth, PlayerPersonConfig.MaxHealth);
         }
 
         private void Update()

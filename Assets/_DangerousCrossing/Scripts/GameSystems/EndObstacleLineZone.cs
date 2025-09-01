@@ -14,7 +14,18 @@ namespace _DangerousCrossing.Scripts.GameSystems
             if (other.gameObject.TryGetComponent(out PlayerPerson playerPerson))
             {
                 OnPlayerInEndZone?.Invoke();
+                SetActiveZone(false);
             }
+        }
+
+        private void SetActiveZone(bool active)
+        {
+            gameObject.SetActive(active);
+        }
+
+        public void ActivateZone()
+        {
+            SetActiveZone(true);
         }
     }
 }

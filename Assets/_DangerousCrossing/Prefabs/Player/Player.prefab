@@ -1225,7 +1225,7 @@ GameObject:
   - component: {fileID: 1882078074652545845}
   - component: {fileID: 7960544553970473635}
   - component: {fileID: 4540572202693564530}
-  - component: {fileID: 8862214541577855505}
+  - component: {fileID: 1398902813020252447}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1263,7 +1263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca8113e68ca4f2a8a29ac1531118014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
   _healthBarUI: {fileID: 8893363947836914782}
   _playerInputHandler: {fileID: 1489150669962555190}
   _personAnimationController: {fileID: 4788685333841556684}
@@ -1280,7 +1279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9896dcbb827c4afb81e35d421fb0d868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
   _rigidbody: {fileID: 4808083401135515551}
 --- !u!54 &4808083401135515551
 Rigidbody:
@@ -1344,7 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05b0f37eecf462e8e454085398814ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstState: {fileID: 8862214541577855505}
+  _firstState: {fileID: 1398902813020252447}
 --- !u!114 &1882078074652545845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1388,7 @@ MonoBehaviour:
   _playerInputHandler: {fileID: 1489150669962555190}
   _capsuleCollider: {fileID: 6561631703430210149}
   _rigidbody: {fileID: 4808083401135515551}
---- !u!114 &8862214541577855505
+--- !u!114 &1398902813020252447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1407,10 +1405,7 @@ MonoBehaviour:
   _playerPerson: {fileID: 210759846671902705}
   _personAnimationController: {fileID: 4788685333841556684}
   _rigidbody: {fileID: 4808083401135515551}
-  _maxScanTargets: 10
-  _attackRadius: 1
-  _attackCooldown: 2.5
-  _attackDamage: 40
+  _maxScanTargets: 5
   _stopThreshold: 0.1
 --- !u!1001 &1668400292278026032
 PrefabInstance:

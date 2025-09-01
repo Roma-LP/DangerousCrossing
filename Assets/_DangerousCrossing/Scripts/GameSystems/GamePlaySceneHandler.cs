@@ -39,26 +39,25 @@ namespace _DangerousCrossing.Scripts.GameSystems
 
         public void StartGamePlayScene()
         {
-            NeedSpawnPlayer();
+            RestartLevel();
             _obstacleLineContext.Launch();
+        }
+
+        private void RestartLevel()
+        {
+            _playerSpawnContext.ResetPlayerOnStartPoint();
+            _endObstacleLineZone.ActivateZone();
+            _chestLockSpawnerContext.DestroyChestLock();
+            _enemySpawnContext.DeSpawnPerson();
         }
 
         private void HealthPlayerZeroHandler()
         {
-            _playerPersonInstance.StartCoroutineUniversalWait(_waitTimeToSpawnPlayer, NeedSpawnPlayer);
-            _enemySpawnContext.DeSpawnPerson();
-            _endObstacleLineZone.OnPlayerInEndZone += PlayerInEndZoneHandler;
-        }
-
-        private void NeedSpawnPlayer()
-        {
-            _playerSpawnContext.ResetPlayerOnStartPoint();
+            _playerPersonInstance.StartCoroutineUniversalWait(_waitTimeToSpawnPlayer, RestartLevel);
         }
 
         private void PlayerInEndZoneHandler()
         {
-            _endObstacleLineZone.OnPlayerInEndZone -= PlayerInEndZoneHandler;
-            
             _enemySpawnContext.SpawnPerson();
         }
 
@@ -66,9 +65,10 @@ namespace _DangerousCrossing.Scripts.GameSystems
         {
             switch (dialogView)
             {
-                case ChestLockDialog chestLockDialog:
+                case IChestLockHandler chestLockDialog:
                 {
-                    chestLockDialog.ChestLockUnlocked.OnChestLockUnlocked += ChestLockUnlockedHandler;
+                    chestLockDialog.OnChestLockUnlocked += ChestLockUnlockedHandler;
+                    
                     break;
                 }
                 case WinPanelDialog winPanelDialog:
@@ -100,8 +100,8 @@ namespace _DangerousCrossing.Scripts.GameSystems
         {
             winPanelDialog.AddHiddenHandler((dialogView) =>
             {
-                NeedSpawnPlayer();
-            });
+                RestartLevel();
+;            });
             winPanelDialog.Hide();
         }
         
@@ -109,6 +109,7 @@ namespace _DangerousCrossing.Scripts.GameSystems
         {
             _playerPersonInstance.OnHealthZero -= HealthPlayerZeroHandler;
             _dialogService.OnDialogShown -= OnDialogShownHandler;
+            _endObstacleLineZone.OnPlayerInEndZone -= PlayerInEndZoneHandler;
             _enemySpawnContext.OnAllEnemiesDied -= OnAllEnemiesDiedHandler;
         }
     }

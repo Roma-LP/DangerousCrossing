@@ -23,5 +23,13 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             _chestLockPropsInstance = Instantiate(_chestLockProps, _chestLockSpawnPoint.position, Quaternion.identity, _chestLockSpawnPoint);
             _chestLockPropsInstance.Init(_dialogService);
         }
+
+        public void DestroyChestLock()
+        {
+            if(_chestLockPropsInstance == null)
+                return;
+            
+            Destroy(_chestLockPropsInstance.gameObject);
+        }
     }
 }

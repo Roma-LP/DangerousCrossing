@@ -1,11 +1,12 @@
 ﻿using _DangerousCrossing.Scripts.Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Player
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        [SerializeField] private float _speed = 5f;
+        [ShowInInspector, ReadOnly] private float _speed;
         [SerializeField] private Rigidbody _rigidbody;
         
         private IInputReader _input;
@@ -15,10 +16,11 @@ namespace _DangerousCrossing.Scripts.Player
         
         public IInputReader InputReader => _input;
 
-        public void Init(IInputReader input, Transform cameraTransform)
+        public void Init(IInputReader input, Transform cameraTransform, float speed)
         {
             _input = input;
             _cameraTransform = cameraTransform;
+            _speed = speed;
         }
 
         public void UpdateInput()

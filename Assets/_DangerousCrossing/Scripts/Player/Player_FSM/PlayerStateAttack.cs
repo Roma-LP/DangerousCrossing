@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using _DangerousCrossing.Scripts.Enemy;
 using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.StateMachineCore;
+using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.Player.Player_FSM
@@ -12,19 +15,22 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
         [SerializeField] private PlayerAnimationController _personAnimationController;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private int _maxScanTargets = 5;
-
-        [Header("Attack Settings")]
-        [SerializeField] private float _attackRadius = 2f;
-        [SerializeField] private float _attackCooldown = 3f;
-        [SerializeField] private int _attackDamage = 10;
         [SerializeField] private float _stopThreshold = 0.1f;
+        [ShowInInspector, ReadOnly] private float _attackRadius;
+        [ShowInInspector, ReadOnly] private float _attackCooldown;
+        [ShowInInspector, ReadOnly] private int _attackDamage;
 
         private Collider[] _scanBuffer; 
         private Coroutine _coroutineAttack;
 
         private IDamageable _currentTarget;
 
-        //private bool _isAttackAnimationIsPlaying;
+        private void Start()
+        {
+            _attackRadius = _playerPerson.PlayerPersonConfig.AttackDistance;
+            _attackCooldown = _playerPerson.PlayerPersonConfig.AttackCooldown;
+            _attackDamage = _playerPerson.PlayerPersonConfig.AttackDamage;
+        }
 
         private void OnEnable()
         {
@@ -60,11 +66,13 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
                     if (ScanForTarget(out _currentTarget))
                     {
                         _personAnimationController.SetAttack();
+                        RotateTowardsTarget(_currentTarget.TargetTransform);
                     }
                 }
                 else
                 {
                     _personAnimationController.SetAttack();
+                    RotateTowardsTarget(_currentTarget.TargetTransform);
                 }
             }
         }
@@ -106,6 +114,20 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
             if (_currentTarget != null && _currentTarget.CurrentHealth <= 0f)
             {
                 _currentTarget = null;
+            }
+        }
+        
+        private void RotateTowardsTarget(Transform target, float duration = 0.3f)
+        {
+            if (target == null) return;
+        
+            Vector3 direction = target.position - transform.position;
+            direction.y = 0;
+        
+            if (direction != Vector3.zero)
+            {
+                transform.DOLookAt(transform.position + direction, duration)
+                    .SetEase(Ease.OutQuad).SetLink(gameObject);
             }
         }
 

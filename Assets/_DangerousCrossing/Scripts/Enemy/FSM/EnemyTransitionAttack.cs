@@ -6,13 +6,13 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
 {
     public class EnemyTransitionAttack : FSMTransition
     {
-        [SerializeField] private float _delayBeforeTransition = 3f;
+        [SerializeField] private EnemyPerson _enemyPerson;
         
         protected override void OnEnable()
         {
             base.OnEnable();
             
-            this.StartCoroutineUniversalWait(_delayBeforeTransition, SetNeedTransit);
+            this.StartCoroutineUniversalWait(_enemyPerson.EnemySpawnLinks.EnemyPersonConfig.DelayBeforeTransitInAttack, SetNeedTransit);
         }
     }
 }

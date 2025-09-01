@@ -45,8 +45,9 @@ namespace _DangerousCrossing.Scripts.Enemy
             _enemySpawnLinks = parametrs;
             _playerPerson = _enemySpawnLinks.PlayerPerson;
             _enemyFsm.StartFSM();
+            _agent.speed = _enemySpawnLinks.EnemyPersonConfig.MovementSpeed;
             InitHealthBar(_enemySpawnLinks.CameraTransform);
-            ResetCurrentHealth();
+            ResetCurrentHealth(_enemySpawnLinks.EnemyPersonConfig.CurrentHealth, _enemySpawnLinks.EnemyPersonConfig.MaxHealth);
         }
 
         public void NeedRemove()
