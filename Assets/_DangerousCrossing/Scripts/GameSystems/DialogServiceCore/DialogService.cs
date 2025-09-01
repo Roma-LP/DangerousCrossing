@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.Utilities;
 using UnityEngine;
@@ -12,9 +13,10 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         
         private readonly List<Type> _activeDialogTypes = new List<Type>();
         private readonly List<DialogView> _activeDialogs = new List<DialogView>();
+        private readonly Dictionary<Type, DialogView> _activeDialogsDict = new Dictionary<Type, DialogView>();
         
-        public event Action<Type> DialogShown;
-        public event Action<Type> DialogHide;
+        public event Action<DialogView> OnDialogShown;
+        public event Action<DialogView> OnDialogHide;
         
         private DialogView InstantiateDialog<TArgs>(Type dialogType, TArgs args) where TArgs : DialogArgs
         {
@@ -34,8 +36,8 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         private void ShowDialog(DialogView dialogView, Action completeCallback = null)
         {
             dialogView
-                .AddShownHandler(OnDialogShown)
-                .AddHiddenHandler(OnDialogHidden);
+                .AddShownHandler(OnDialogShownHandler)
+                .AddHiddenHandler(OnDialogHiddenHandler);
 
             dialogView.SetParent(_dialogsContainer);
             dialogView.Show();
@@ -43,22 +45,23 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
             completeCallback?.Invoke();
         }
         
-        private void OnDialogShown(DialogView dialogView)
+        private void OnDialogShownHandler(DialogView dialogView)
         {
             _activeDialogs.Add(dialogView);
-            DialogShown?.Invoke(dialogView.GetType());
+            //OnDialogShown?.Invoke(dialogView.GetType());
+            OnDialogShown?.Invoke(dialogView);
         }
 
-        private void OnDialogHidden(DialogView dialogView)
+        private void OnDialogHiddenHandler(DialogView dialogView)
         {
             _activeDialogs.Remove(dialogView);
             _activeDialogTypes.Remove(dialogView.GetType());
 
-            DialogHide?.Invoke(dialogView.GetType());
+            OnDialogHide?.Invoke(dialogView);
             
             dialogView
-                .RemoveShownHandler(OnDialogShown)
-                .RemoveHiddenHandler(OnDialogHidden);
+                .RemoveShownHandler(OnDialogShownHandler)
+                .RemoveHiddenHandler(OnDialogHiddenHandler);
 
             this.StartCoroutineUniversalWait(GameConstants.WAIT_TIME_BEFORE_CLEAR_MEMORY, ClearMemory);
         }
@@ -90,7 +93,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         {
             while (_activeDialogs.Count > 0) 
                 _activeDialogs[0].Hide();
-
+            
             return this;
         }
 
@@ -99,6 +102,20 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
             dialogView.Hide();
 
             return this;
+        }
+
+        public bool TryGetDialog<T>(out T dialog) where T : DialogView
+        {
+            DialogView dialogView = _activeDialogs.FirstOrDefault(dlg => dlg.GetType() == typeof(T));
+            
+            if (dialogView == default)
+            {
+                dialog = null;
+                return false;
+            }
+            
+            dialog = (T)dialogView;
+            return true;
         }
     }
 }

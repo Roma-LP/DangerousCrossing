@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: ChestLockKeyConfig_Type 2
   m_EditorClassIdentifier: 
   _chestLockKeyType: 10
-  _sprite: {fileID: 21300000, guid: 3a74f678ee8f3bd49aacf3de1ae4bcaa, type: 3}
+  _spriteBackground: {fileID: 21300000, guid: 7823260904d8d18499f1636f1fac5677, type: 3}
+  _spriteIcon: {fileID: 21300000, guid: c03eb64f540ec8842938e33caedb6ad4, type: 3}

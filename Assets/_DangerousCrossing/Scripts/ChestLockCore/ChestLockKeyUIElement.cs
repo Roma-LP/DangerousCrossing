@@ -9,6 +9,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
     public class ChestLockKeyUIElement: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField] private Image _keyImage;
+        [SerializeField] private Image _keyBackgroundImage;
 
         public ChestLockKeyType KeyType { get; private set; }
 
@@ -17,12 +18,26 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
 
         private bool isUsed = false;
 
+        private void SetSprites(ChestLockKeyConfig config)
+        {
+            _keyImage.sprite = config.SpriteIcon;
+            _keyBackgroundImage.sprite = config.SpriteBackground;
+            
+            _keyImage.raycastTarget = false;
+            _keyBackgroundImage.raycastTarget = true;
+        }
+
+        private void SetRaycastTarget(bool active)
+        {
+            _keyBackgroundImage.raycastTarget = active;
+        }
+
         public void Init(ChestLockKeyConfig config, RectTransform dragKeyContainer, ChestLockKeysGridCell keyGridCell)
         {
             _dragKeyContainer = dragKeyContainer;
             _chestLockKeysGridCell = keyGridCell;
-            _keyImage.sprite = config.Sprite;
             KeyType = config.ChestLockKeyType;
+            SetSprites(config);
             //keyGridCell.SetKey(this);
         }
 
@@ -30,7 +45,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         {
             if (isUsed) return;
             
-            _keyImage.raycastTarget = false;
+            SetRaycastTarget(false);
             transform.SetParent(_dragKeyContainer.transform, true);
         }
 
@@ -43,7 +58,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            _keyImage.raycastTarget = true;
+            SetRaycastTarget(true);
             if (isUsed) return;
             
             _chestLockKeysGridCell.SetKey(this);

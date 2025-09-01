@@ -10,10 +10,14 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
     public abstract class DialogView : Dialog, IReceiveArgs<DialogArgs>
     {
         [SerializeField] private Button _closeButton;
+        
         [SerializeField] private bool _isNeedBackgroundCloseArea = false;
-
         [SerializeField, ShowIf(nameof(_isNeedBackgroundCloseArea))]
         private Button _closeAreaButton;
+        
+        [SerializeField] private bool _isNeedBlockInputArea = false;
+        [SerializeField, ShowIf(nameof(_isNeedBlockInputArea))]
+        private GameObject _blockInputArea;
 
         [SerializeField] private CanvasGroup _canvasGroup;
 
@@ -21,7 +25,6 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
 
         private void Awake()
         {
-            //transform.DOLocalMove(Vector3.zero, 0);
             _canvasGroup.alpha = 0f;
             _rectTransform = gameObject.GetComponent<RectTransform>();
 
@@ -37,14 +40,19 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
             RectTransform dialogRect = GetComponent<RectTransform>();
 
             dialogRect.SetParent(parentTransform);
-            //dialogRect.position = Vector3.zero;
-            // dialogRect.localScale = Vector3.one;
-            // dialogRect.rotation = new Quaternion(0, 0, 0, 0);
         }
 
         public void SetArgs(DialogArgs args)
         {
             _dialogArgs = args;
+        }
+
+        public virtual void SetActiveBlockInputArea(bool active)
+        {
+            if (_isNeedBlockInputArea)
+            {
+                _canvasGroup.enabled = active;
+            }
         }
 
         public virtual void Show()

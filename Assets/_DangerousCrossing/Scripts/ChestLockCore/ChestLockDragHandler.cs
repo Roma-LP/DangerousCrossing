@@ -1,19 +1,19 @@
 ﻿using System;
 using _DangerousCrossing.Scripts.Enums;
-using UnityEngine;
+using _DangerousCrossing.Scripts.Interfaces;
 
 namespace _DangerousCrossing.Scripts.ChestLockCore
 {
-    public class ChestLockDragHandler : IDisposable
+    public class ChestLockDragHandler : IDisposable,  IChestLockUnlocked
     {
         private ChestLockPanel _chestLockPanel;
         private ChestLockKeyType _keyToChestUnlock;
         private int _currentAcceptKeysCount;
         private int _countKeysToOpenLock;
-
-
+        private ChestLockDialog _chestLockDialog;
+        
         public event Action<int, int> OnCurrentAcceptKeysCountChanged;
-        public event Action<int> OnChestLockUnlocked;
+        public event Action OnChestLockUnlocked;
         
         public int CountKeysToOpenLock => _countKeysToOpenLock;
         public int AcceptKeysCount
@@ -27,11 +27,12 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             }
         }
         
-        public ChestLockDragHandler(ChestLockPanel chestLockPanel, ChestLockKeyType keyToChestUnlock, int countKeysToOpenLock)
+        public ChestLockDragHandler(ChestLockPanel chestLockPanel, ChestLockKeyType keyToChestUnlock, int countKeysToOpenLock, ChestLockDialog chestLockDialog)
         {
             _chestLockPanel = chestLockPanel;
             _keyToChestUnlock = keyToChestUnlock;
             _countKeysToOpenLock =  countKeysToOpenLock;
+            _chestLockDialog =  chestLockDialog;
             
             _chestLockPanel.OnDropKeyUIElement += DropKeyUIElementHandler;
         }
@@ -46,13 +47,9 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             
                 if (_currentAcceptKeysCount >= _countKeysToOpenLock)
                 {
-                    Debug.Log("Замок открыт!");
-                    OnChestLockUnlocked?.Invoke(_currentAcceptKeysCount);
+                    OnChestLockUnlocked?.Invoke();
+                    _chestLockDialog.SetActiveBlockInputArea(true);
                 }
-            }
-            else
-            {
-                Debug.Log("Неподходящий ключ!");
             }
         }
 

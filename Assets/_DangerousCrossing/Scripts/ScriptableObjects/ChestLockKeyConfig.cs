@@ -8,9 +8,11 @@ namespace _DangerousCrossing.Scripts.ScriptableObjects
     public class ChestLockKeyConfig : ScriptableObject
     {
         [SerializeField] private ChestLockKeyType _chestLockKeyType;
-        [SerializeField, PreviewField(100)] private Sprite _sprite;
+        [SerializeField, PreviewField(100)] private Sprite _spriteBackground;
+        [SerializeField, PreviewField(100)] private Sprite _spriteIcon;
         
         public ChestLockKeyType ChestLockKeyType => _chestLockKeyType;
-        public Sprite Sprite => _sprite;
+        public Sprite SpriteBackground => _spriteBackground;
+        public Sprite SpriteIcon => _spriteIcon;
     }
 }

@@ -18,6 +18,7 @@ public class SceneContext : MonoBehaviour
     [SerializeField] private EnemySpawnContext _enemySpawnContext;
     [SerializeField] private EndObstacleLineZone _endObstacleLineZone;
     [SerializeField] private CamerasContext _camerasContext;
+    [SerializeField] private ChestLockSpawnerContext _chestLockSpawnerContext;
 
     //public InputReaderTouch InputReaderTouch => _inputReaderTouch;
 
@@ -47,7 +48,8 @@ public class SceneContext : MonoBehaviour
         _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance, _camerasContext.PlayerCamera.transform);
         _gamePlaySceneHandler =
             new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone,
-                _enemySpawnContext);
+                _enemySpawnContext, _dialogService, _chestLockSpawnerContext);
+        _chestLockSpawnerContext.Init(_dialogService);
     }
 
     private void OnDestroy()

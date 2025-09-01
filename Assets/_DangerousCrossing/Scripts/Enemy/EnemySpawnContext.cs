@@ -1,4 +1,5 @@
-﻿using _DangerousCrossing.Scripts.Player;
+﻿using System;
+using _DangerousCrossing.Scripts.Player;
 using _DangerousCrossing.Scripts.Utilities;
 using UnityEngine;
 
@@ -14,9 +15,21 @@ namespace _DangerousCrossing.Scripts.Enemy
 
         private EnemySpawnLinks _enemySpawnLinks;
 
+        public event Action OnAllEnemiesDied;
+
         public void Init(PlayerPerson playerPerson, Transform cameraTransform)
         {
             _enemySpawnLinks = new EnemySpawnLinks(_attackDistance, _attackCooldown, _attackDamage, playerPerson, cameraTransform);
+        }
+
+        protected override void OnRemovableHandler(EnemyPerson spawnedObject)
+        {
+            base.OnRemovableHandler(spawnedObject);
+
+            if (_spawnedObjects.Count == 0)
+            {
+                OnAllEnemiesDied?.Invoke();
+            }
         }
 
         public override void SpawnPerson()

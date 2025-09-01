@@ -10,6 +10,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
 {
     public class ChestLockPanel: MonoBehaviour, IDropHandler, IDisposable
     {
+        [SerializeField] private Image _backgroundIcon;
         [SerializeField] private Image _lockIcon;
         [SerializeField] private TextMeshProUGUI _counterText;
         
@@ -20,7 +21,9 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
 
         public void Init(ChestLockKeyType keyToChestUnlock, ChestLockKeyConfigContainer configContainer, ChestLockDragHandler chestLockDragHandler)
         {
-            _lockIcon.sprite = configContainer.GetKeyConfigByKeyType(keyToChestUnlock).Sprite;
+            ChestLockKeyConfig chestLockKeyConfig = configContainer.GetKeyConfigByKeyType(keyToChestUnlock);
+            _backgroundIcon.sprite = chestLockKeyConfig.SpriteBackground;
+            _lockIcon.sprite = chestLockKeyConfig.SpriteIcon;
             _chestLockDragHandler = chestLockDragHandler;
             UpdateCounter(_chestLockDragHandler.AcceptKeysCount, _chestLockDragHandler.CountKeysToOpenLock);
 
@@ -36,23 +39,6 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         {
             if (eventData.pointerDrag.TryGetComponent(out ChestLockKeyUIElement keyUIElement))
             {
-                // if (keyUIElement.KeyType.ChestLockKeyType == CurrentLock.ChestLockKeyType)
-                // {
-                //     _currentCount++;
-                //     UpdateCounter();
-                //
-                //     keyUIElement.MarkAsUsed();
-                //
-                //     if (_currentCount >= _countToOpen)
-                //     {
-                //         Debug.Log("Замок открыт!");
-                //     }
-                // }
-                // else
-                // {
-                //     Debug.Log("Неподходящий ключ!");
-                // }
-                
                 OnDropKeyUIElement?.Invoke(keyUIElement);
             }
         }
