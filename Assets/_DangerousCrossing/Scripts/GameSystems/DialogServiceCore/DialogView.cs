@@ -73,7 +73,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         {
             if (_isNeedBlockInputArea)
             {
-                _canvasGroup.enabled = active;
+                _blockInputArea.gameObject.SetActive(active);
             }
         }
 
@@ -91,6 +91,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
             }
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform.Stretch());
+            _rectTransform.localScale = Vector3.one;
         }
 
         public virtual void Hide()
