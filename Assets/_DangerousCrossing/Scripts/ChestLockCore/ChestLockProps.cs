@@ -6,16 +6,21 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
     public class ChestLockProps : ObjectFloatRotateAnimation,  IInteractable
     {
         private IDialogService _dialogService;
+        private IDataStorage _dataStorage;
 
-        public void Init(IDialogService dialogService)
+        public void Init(IDialogService dialogService, IDataStorage dataStorage)
         {
             _dialogService = dialogService;
+            _dataStorage = dataStorage;
         }
         
         public void Interact()
         {
             StopAnimation();
-            _dialogService.CallDialog(typeof(ChestLockDialog));
+            _dialogService.CallDialog<ChestLockDialogArgs>(typeof(ChestLockDialog), new ChestLockDialogArgs()
+            {
+                IDataStorage = _dataStorage
+            });
         }
     }
 }

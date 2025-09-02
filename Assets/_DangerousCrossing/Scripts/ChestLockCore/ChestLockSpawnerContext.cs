@@ -1,4 +1,5 @@
 ﻿using _DangerousCrossing.Scripts.Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _DangerousCrossing.Scripts.ChestLockCore
@@ -10,18 +11,21 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
 
         private ChestLockProps _chestLockPropsInstance;
         private IDialogService _dialogService;
+        private IDataStorage _dataStorage;
         
         public ChestLockProps ChestLockProps => _chestLockPropsInstance;
 
-        public void Init(IDialogService dialogService)
+        public void Init(IDialogService dialogService, IDataStorage dataStorage)
         {
             _dialogService = dialogService;
+            _dataStorage = dataStorage;
         }
         
+        [Button]
         public void SpawnChestLock()
         {
             _chestLockPropsInstance = Instantiate(_chestLockProps, _chestLockSpawnPoint.position, Quaternion.identity, _chestLockSpawnPoint);
-            _chestLockPropsInstance.Init(_dialogService);
+            _chestLockPropsInstance.Init(_dialogService, _dataStorage);
         }
 
         public void DestroyChestLock()

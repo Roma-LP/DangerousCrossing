@@ -20,7 +20,8 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
 
         public override void Show()
         {
-            _chestLockInitiator = new ChestLockInitiator(_chestLockConfig,  _chestLockKeysGridPanel);
+            ChestLockDialogArgs chestLockDialogArgs = GetArgs<ChestLockDialogArgs>();
+            _chestLockInitiator = new ChestLockInitiator(_chestLockConfig,  _chestLockKeysGridPanel, chestLockDialogArgs.IDataStorage);
             ChestLockKeyType[] keysToSpawn = _chestLockInitiator.GenerateKeysGrid();
             _chestLockKeysGridPanel.Init(_chestLockConfig.ChestLockKeyConfigContainer);
             _chestLockDragHandler = new ChestLockDragHandler(_chestLockPanel, _chestLockInitiator.KeyToChestUnlock, _chestLockConfig.CountKeysToOpenLock, this, ChestLockUnlocked);

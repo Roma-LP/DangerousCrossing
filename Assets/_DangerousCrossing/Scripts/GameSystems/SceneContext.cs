@@ -1,7 +1,9 @@
 using _DangerousCrossing.Scripts.ChestLockCore;
 using _DangerousCrossing.Scripts.Enemy;
 using _DangerousCrossing.Scripts.GameSystems;
+using _DangerousCrossing.Scripts.GameSystems.DataStorageCore;
 using _DangerousCrossing.Scripts.GameSystems.DialogServiceCore;
+using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.ObstacleLineCore;
 using _DangerousCrossing.Scripts.Player;
 using _DangerousCrossing.Scripts.UI;
@@ -20,9 +22,8 @@ public class SceneContext : MonoBehaviour
     [SerializeField] private CamerasContext _camerasContext;
     [SerializeField] private ChestLockSpawnerContext _chestLockSpawnerContext;
 
-    //public InputReaderTouch InputReaderTouch => _inputReaderTouch;
-
     private GamePlaySceneHandler _gamePlaySceneHandler;
+    private IDataStorage _dataStorage;
 
     private void Awake()
     {
@@ -43,13 +44,14 @@ public class SceneContext : MonoBehaviour
 
     private void Bootstrapper()
     {
+        _dataStorage = new JsonDataStorage();
         _obstacleLineContext.Init();
         _playerSpawnContext.Init(_inputReaderJoystick, _camerasContext.PlayerCamera.transform);
         _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance, _camerasContext.PlayerCamera.transform);
         _gamePlaySceneHandler =
             new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone,
                 _enemySpawnContext, _dialogService, _chestLockSpawnerContext);
-        _chestLockSpawnerContext.Init(_dialogService);
+        _chestLockSpawnerContext.Init(_dialogService, _dataStorage);
     }
 
     private void OnDestroy()

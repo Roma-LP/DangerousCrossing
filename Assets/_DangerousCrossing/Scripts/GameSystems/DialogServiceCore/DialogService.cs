@@ -25,7 +25,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
             if (dialogPrefab != null) 
             {
                 DialogView instance = Instantiate(dialogPrefab).GetComponent<DialogView>();
-                (instance as IReceiveArgs<TArgs>).SetArgs(args);
+                ((IReceiveArgs<TArgs>)instance).SetArgs(args);
                 
                 return instance;
             }

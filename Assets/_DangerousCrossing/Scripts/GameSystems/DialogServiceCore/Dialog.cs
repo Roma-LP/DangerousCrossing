@@ -5,7 +5,6 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
 {
     public abstract class Dialog : MonoBehaviour
     {
-        protected DialogArgs _dialogArgs;
         protected bool _visible { get; set; }
         
         protected event Action<DialogView> _onDialogShown;

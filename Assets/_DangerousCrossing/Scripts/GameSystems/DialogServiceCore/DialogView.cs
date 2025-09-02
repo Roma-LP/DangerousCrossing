@@ -1,4 +1,5 @@
-﻿using _DangerousCrossing.Scripts.Interfaces;
+﻿using System;
+using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.Utilities;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -22,6 +23,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         [SerializeField] private CanvasGroup _canvasGroup;
 
         private RectTransform _rectTransform;
+        private DialogArgs _dialogArgs;
 
         private void Awake()
         {
@@ -45,6 +47,26 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         public void SetArgs(DialogArgs args)
         {
             _dialogArgs = args;
+        }
+        
+        protected TArgs GetArgs<TArgs>() where TArgs : DialogArgs
+        {
+            if (_dialogArgs == null)
+            {
+                Debug.LogError($"Trying to receive {typeof(TArgs)} - NULL args");
+                return null;
+            }
+
+            try
+            {
+                return (TArgs)_dialogArgs;
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"Can not cast [{_dialogArgs.GetType().Name}] into [{typeof(TArgs).Name}]");
+            }
+
+            return null;
         }
 
         public virtual void SetActiveBlockInputArea(bool active)
