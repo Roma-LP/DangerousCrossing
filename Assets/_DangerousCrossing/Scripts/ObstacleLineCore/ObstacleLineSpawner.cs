@@ -42,9 +42,14 @@ namespace _DangerousCrossing.Scripts.ObstacleLineCore
         {
             ObstacleInstance ped = _pool.Get();
             ped.SetPool(_pool);
-
             ped.transform.position = _startPoint.position;
 
+            Vector3 direction = (_endPoint.position - _startPoint.position).normalized;
+            if (direction != Vector3.zero)
+            {
+                ped.transform.rotation = Quaternion.LookRotation(direction);
+            }
+            
             ped.transform
                 .DOMove(_endPoint.position, _obstacleLineReferencesAndSettings.MoveDuration)
                 .SetEase(Ease.Linear)

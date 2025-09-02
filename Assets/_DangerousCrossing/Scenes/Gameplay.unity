@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _moveDuration
-      value: 3
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _lineDirection
@@ -256,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _spawnInterval
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -715,7 +715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _moveDuration
-      value: 3
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _lineDirection
@@ -723,7 +723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _spawnInterval
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -894,11 +894,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _moveDuration
-      value: 3.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _spawnInterval
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
+      propertyPath: obstacleLineDirection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1225,7 +1229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _spawnInterval
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2063,7 +2067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _moveDuration
-      value: 3
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _lineDirection
@@ -2071,7 +2075,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
       propertyPath: _spawnInterval
-      value: 5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5126777073273504699, guid: b7b61b142ebeb144cab75ba7b0f14fec, type: 3}
+      propertyPath: obstacleLineDirection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
