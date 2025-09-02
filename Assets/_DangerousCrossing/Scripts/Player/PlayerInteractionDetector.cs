@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using _DangerousCrossing.Scripts.Enemy;
 using _DangerousCrossing.Scripts.Interfaces;
 using UnityEngine;
 
@@ -8,56 +6,26 @@ namespace _DangerousCrossing.Scripts.Player
 {
     public class PlayerInteractionDetector : MonoBehaviour
     {
-        private readonly HashSet<EnemyPerson> _detectedEnemies = new();
-    
-        public int EnemyCountDetected => _detectedEnemies.Count;
-        public event Action<int> OnEnemyDetected; 
+        public event Action OnEnemyDetected;
 
         private void OnTriggerEnter(Collider other)
         {
             GameObject otherGameObject = other.gameObject;
-            
-            if (otherGameObject.TryGetComponent(out IInteractable interactable))
-            {
-                interactable.Interact();
-            }
-        
-            if (otherGameObject.TryGetComponent(out EnemyPerson enemyPerson))
-            {
-                HandleEnemyEnter(enemyPerson);
-            }
-        }
 
-        private void OnTriggerExit(Collider other)
-        {
-            GameObject otherGameObject = other.gameObject;
-        
-            if (otherGameObject.TryGetComponent(out EnemyPerson enemyPerson))
+            if (otherGameObject.TryGetComponent(out IDamageable damageable))
             {
-                HandleEnemyExit(enemyPerson);
+                if (damageable.CurrentHealth == 0)
+                    return;
+               
+                OnEnemyDetected?.Invoke();
             }
-        }
-
-        private void HandleEnemyEnter(EnemyPerson enemyPerson)
-        {
-            if (_detectedEnemies.Add(enemyPerson))
+            else
             {
-                OnEnemyDetected?.Invoke(EnemyCountDetected);
+                if (otherGameObject.TryGetComponent(out IInteractable interactable))
+                {
+                    interactable.Interact();
+                }
             }
-        }
-
-        private void HandleEnemyExit(EnemyPerson enemyPerson)
-        {
-            if (_detectedEnemies.Remove(enemyPerson))
-            {
-                OnEnemyDetected?.Invoke(EnemyCountDetected);
-            }
-        }
-        
-        private void OnDestroy()
-        {
-            _detectedEnemies.Clear();
-            OnEnemyDetected = null;
         }
     }
 }

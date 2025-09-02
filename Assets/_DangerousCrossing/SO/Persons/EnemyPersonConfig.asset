@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentHealth: 100
   _maxHealth: 100
-  _attackCooldown: 3
+  _attackCooldown: 1
   _attackDamage: 20
   _attackDistance: 0.9
   _movementSpeed: 3

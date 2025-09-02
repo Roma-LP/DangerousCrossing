@@ -14,6 +14,7 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
         [SerializeField] private int _maxScanTargets = 5;
         [SerializeField] private float _stopThreshold = 0.1f;
         [SerializeField] private float _timeToWaitNextFrame = 0.1f;
+        [SerializeField] private LayerMask _targetLayer;
         [ShowInInspector, ReadOnly] private float _attackRadius;
         [ShowInInspector, ReadOnly] private float _attackCooldown;
         [ShowInInspector, ReadOnly] private int _attackDamage;
@@ -88,6 +89,9 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
 
         private void StartAttack()
         {
+            if (IsCurrentTargetDied())
+                return;
+
             _personAnimationController.SetAttack();
             _playerPerson.RotateTowardsTarget(_currentTarget.TargetTransform);
         }
@@ -96,15 +100,12 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
         {
             target = null;
 
-            int hits = Physics.OverlapSphereNonAlloc(transform.position, _attackRadius, _scanBuffer);
+            int hits = Physics.OverlapSphereNonAlloc(transform.position, _attackRadius, _scanBuffer, _targetLayer);
 
             for (int i = 0; i < hits; i++)
             {
                 if (_scanBuffer[i].TryGetComponent(out IDamageable iDamageable))
                 {
-                    if (iDamageable == _playerPerson)
-                        continue;
-
                     if (iDamageable.CurrentHealth > 0f)
                     {
                         target = iDamageable;
@@ -118,7 +119,13 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
 
         private bool IsCurrentTargetDied()
         {
-            return _currentTarget != null && _currentTarget.CurrentHealth <= 0f;
+            if (_currentTarget != null && _currentTarget.CurrentHealth <= 0f)
+            {
+                _currentTarget = null;
+                return true;
+            }
+
+            return false;
         }
 
         private void AttackMoment()
@@ -131,8 +138,7 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
 
         private void AttackAnimationEnd()
         {
-            if (IsCurrentTargetDied())
-                _currentTarget = null;
+            IsCurrentTargetDied();
         }
 
 #if UNITY_EDITOR

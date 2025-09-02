@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 4540572202693564530}
   - component: {fileID: 715318698550956242}
   - component: {fileID: 1398902813020252447}
-  - component: {fileID: 5162388476457392239}
+  - component: {fileID: 59003620981066331}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1405,7 +1405,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetState: {fileID: 1398902813020252447}
   _playerInteractionDetector: {fileID: 2934092561916341769}
-  detectionState: 1
 --- !u!114 &1398902813020252447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,14 +1419,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 7960544553970473635}
-  - {fileID: 5162388476457392239}
+  - {fileID: 59003620981066331}
   _playerPerson: {fileID: 210759846671902705}
   _personAnimationController: {fileID: 4788685333841556684}
   _rigidbody: {fileID: 4808083401135515551}
   _maxScanTargets: 5
   _stopThreshold: 0.1
   _timeToWaitNextFrame: 0.1
---- !u!114 &5162388476457392239
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &59003620981066331
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1436,12 +1438,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 9170776898787913501}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00aebbc5c1b2490ebf7cbe233a6461f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 11df616244124fe8acb355c58d54e1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 1882078074652545845}
-  _playerInteractionDetector: {fileID: 2934092561916341769}
-  detectionState: 0
+  _playerPerson: {fileID: 210759846671902705}
+  _maxScanTargets: 5
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _scanInterval: 1
 --- !u!1001 &1668400292278026032
 PrefabInstance:
   m_ObjectHideFlags: 0

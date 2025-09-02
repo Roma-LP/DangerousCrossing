@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 5987902369810835544}
   - component: {fileID: 955394221821095302}
   - component: {fileID: 428002367540310188}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1368,9 +1368,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7471213690325236443}
     m_Modifications:
+    - target: {fileID: 1399393082000507592, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2669279460915508681, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4660265262824263219, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911676963860216354, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735986068517245469, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7945993618221137106, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
       propertyPath: m_Name
       value: CanvasUIHPBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7945993618221137106, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8644292172476922266, guid: 6f1e51dddb5864d4fb0eb573663658c6, type: 3}
       propertyPath: m_Pivot.x
