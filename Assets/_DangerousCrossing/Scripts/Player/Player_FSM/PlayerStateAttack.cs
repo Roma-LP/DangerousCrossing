@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using _DangerousCrossing.Scripts.Enemy;
+﻿using System.Collections;
 using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.StateMachineCore;
-using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,12 +13,15 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private int _maxScanTargets = 5;
         [SerializeField] private float _stopThreshold = 0.1f;
+        [SerializeField] private float _timeToWaitNextFrame = 0.1f;
         [ShowInInspector, ReadOnly] private float _attackRadius;
         [ShowInInspector, ReadOnly] private float _attackCooldown;
         [ShowInInspector, ReadOnly] private int _attackDamage;
 
-        private Collider[] _scanBuffer; 
+        private Collider[] _scanBuffer;
         private Coroutine _coroutineAttack;
+        private WaitForSeconds _waitCooldown;
+        private WaitForSeconds _waitNextFrame;
 
         private IDamageable _currentTarget;
 
@@ -30,12 +30,14 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
             _attackRadius = _playerPerson.PlayerPersonConfig.AttackDistance;
             _attackCooldown = _playerPerson.PlayerPersonConfig.AttackCooldown;
             _attackDamage = _playerPerson.PlayerPersonConfig.AttackDamage;
+
+            _waitCooldown = new WaitForSeconds(_attackCooldown);
+            _waitNextFrame = new WaitForSeconds(_timeToWaitNextFrame);
         }
 
         private void OnEnable()
         {
             _scanBuffer = new Collider[_maxScanTargets];
-            //_isAttackAnimationIsPlaying =  false;
             if (_coroutineAttack == null)
                 _coroutineAttack = StartCoroutine(nameof(TryAttack));
 
@@ -47,6 +49,7 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
         {
             StopCoroutine(_coroutineAttack);
             _coroutineAttack = null;
+            _currentTarget = null;
 
             _personAnimationController.OnAttackMoment -= AttackMoment;
             _personAnimationController.OnAttackAnimationEnd -= AttackAnimationEnd;
@@ -56,21 +59,29 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
         {
             while (true)
             {
-                yield return new WaitForSeconds(_attackCooldown);
-
-                if (_rigidbody.velocity.magnitude > _stopThreshold)
-                    continue;
-
-                if (_currentTarget == null)
+                if (_rigidbody.velocity.magnitude <= _stopThreshold)
                 {
-                    if (ScanForTarget(out _currentTarget))
+                    if (_currentTarget == null)
+                    {
+                        if (ScanForTarget(out _currentTarget))
+                        {
+                            StartAttack();
+                            yield return _waitCooldown;
+                        }
+                        else
+                        {
+                            yield return _waitNextFrame;
+                        }
+                    }
+                    else
                     {
                         StartAttack();
+                        yield return _waitCooldown;
                     }
                 }
                 else
                 {
-                    StartAttack();
+                    yield return _waitNextFrame;
                 }
             }
         }
@@ -89,15 +100,15 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
 
             for (int i = 0; i < hits; i++)
             {
-                if (_scanBuffer[i].TryGetComponent(out EnemyPerson enemyPerson))
+                if (_scanBuffer[i].TryGetComponent(out IDamageable iDamageable))
                 {
-                    if (enemyPerson.TryGetComponent(out IDamageable iDamageable))
+                    if (iDamageable == _playerPerson)
+                        continue;
+
+                    if (iDamageable.CurrentHealth > 0f)
                     {
-                        if (iDamageable.CurrentHealth > 0f)
-                        {
-                            target = iDamageable;
-                            return true;
-                        }
+                        target = iDamageable;
+                        return true;
                     }
                 }
             }
@@ -105,20 +116,23 @@ namespace _DangerousCrossing.Scripts.Player.Player_FSM
             return false;
         }
 
+        private bool IsCurrentTargetDied()
+        {
+            return _currentTarget != null && _currentTarget.CurrentHealth <= 0f;
+        }
+
         private void AttackMoment()
         {
-            if (_currentTarget == null)
+            if (IsCurrentTargetDied())
                 return;
-            
+
             _currentTarget.TakeDamage(_attackDamage);
         }
 
         private void AttackAnimationEnd()
         {
-            if (_currentTarget != null && _currentTarget.CurrentHealth <= 0f)
-            {
+            if (IsCurrentTargetDied())
                 _currentTarget = null;
-            }
         }
 
 #if UNITY_EDITOR

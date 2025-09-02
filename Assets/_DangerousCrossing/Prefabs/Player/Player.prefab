@@ -1225,7 +1225,9 @@ GameObject:
   - component: {fileID: 1882078074652545845}
   - component: {fileID: 7960544553970473635}
   - component: {fileID: 4540572202693564530}
+  - component: {fileID: 715318698550956242}
   - component: {fileID: 1398902813020252447}
+  - component: {fileID: 5162388476457392239}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1342,7 +1344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05b0f37eecf462e8e454085398814ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstState: {fileID: 1398902813020252447}
+  _firstState: {fileID: 1882078074652545845}
 --- !u!114 &1882078074652545845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,6 +1359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 7960544553970473635}
+  - {fileID: 715318698550956242}
 --- !u!114 &7960544553970473635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,6 +1391,21 @@ MonoBehaviour:
   _playerInputHandler: {fileID: 1489150669962555190}
   _capsuleCollider: {fileID: 6561631703430210149}
   _rigidbody: {fileID: 4808083401135515551}
+--- !u!114 &715318698550956242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170776898787913501}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00aebbc5c1b2490ebf7cbe233a6461f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetState: {fileID: 1398902813020252447}
+  _playerInteractionDetector: {fileID: 2934092561916341769}
+  detectionState: 1
 --- !u!114 &1398902813020252447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,11 +1420,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 7960544553970473635}
+  - {fileID: 5162388476457392239}
   _playerPerson: {fileID: 210759846671902705}
   _personAnimationController: {fileID: 4788685333841556684}
   _rigidbody: {fileID: 4808083401135515551}
   _maxScanTargets: 5
   _stopThreshold: 0.1
+  _timeToWaitNextFrame: 0.1
+--- !u!114 &5162388476457392239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170776898787913501}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00aebbc5c1b2490ebf7cbe233a6461f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetState: {fileID: 1882078074652545845}
+  _playerInteractionDetector: {fileID: 2934092561916341769}
+  detectionState: 0
 --- !u!1001 &1668400292278026032
 PrefabInstance:
   m_ObjectHideFlags: 0

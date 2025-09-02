@@ -50,15 +50,13 @@ namespace _DangerousCrossing.Scripts.Enemy.FSM
                 {
                     StartAttack();
                 }
-                else
-                {
-                    _cooldownTimer -= Time.deltaTime;
-                }
             }
             else
             {
                 _enemyPerson.MoveTo(_enemyPerson.PlayerPerson.transform.position);
             }
+            
+            _cooldownTimer -= Time.deltaTime;
         }
 
         private bool IsAttackDistance()
