@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using _DangerousCrossing.Scripts.Enums;
+﻿using _DangerousCrossing.Scripts.Enums;
+using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,8 +20,10 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             _configContainer = configContainer;
         }
 
-        public void InstantiateGridWithKeys(ChestLockKeyType[] keysToSpawn)
+        public void InstantiateGridWithKeys(IArrayProvider<ChestLockKeyType> keysProvider)
         {
+            ChestLockKeyType[] keysToSpawn = keysProvider.GetArray();
+            return;
             foreach (ChestLockKeyType lockKeyType in keysToSpawn)
             {
                 ChestLockKeysGridCell cell = Instantiate(_gridCell, grid.transform);

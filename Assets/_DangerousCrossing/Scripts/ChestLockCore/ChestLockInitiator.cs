@@ -13,7 +13,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         private ChestLockKeysGridPanel _chestLockKeysGridPanel;
         private ChestLockDataProvider  _chestLockDataProvider;
         private ChestLockKeyType _keyToChestUnlock;
-        private ChestLockKeyType[] keysToSpawn;
+        private GenericArrayProvider<ChestLockKeyType> _keysToSpawnProvider;
 
         public ChestLockKeyType KeyToChestUnlock => _keyToChestUnlock;
 
@@ -29,7 +29,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             return _chestLockDataProvider.GetNewLockKeyType();
         }
         
-        public ChestLockKeyType[] GenerateKeysGrid()
+        public IArrayProvider<ChestLockKeyType> GenerateKeysGrid()
         {
             int totalKeys = _chestLockConfig.CountGridKeysRows * _chestLockConfig.CountGridKeysColumns;
             _keyToChestUnlock = GetKeyToChestUnlock();
@@ -48,12 +48,14 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             
             keysToSpawn.Shuffle();
             
-            return keysToSpawn;
+            _keysToSpawnProvider = new GenericArrayProvider<ChestLockKeyType>(keysToSpawn);
+            
+            return _keysToSpawnProvider;
         }
 
-        public void FillGridPanelWithKeys(ChestLockKeyType[] chestLockKeyTypes)
+        public void FillGridPanelWithKeys(IArrayProvider<ChestLockKeyType> keysProvider)
         {
-            _chestLockKeysGridPanel.InstantiateGridWithKeys(chestLockKeyTypes);
+            _chestLockKeysGridPanel.InstantiateGridWithKeys(keysProvider);
         }
     }
 }

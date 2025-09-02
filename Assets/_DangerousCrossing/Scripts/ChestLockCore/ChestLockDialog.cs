@@ -22,11 +22,11 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         {
             ChestLockDialogArgs chestLockDialogArgs = GetArgs<ChestLockDialogArgs>();
             _chestLockInitiator = new ChestLockInitiator(_chestLockConfig,  _chestLockKeysGridPanel, chestLockDialogArgs.IDataStorage);
-            ChestLockKeyType[] keysToSpawn = _chestLockInitiator.GenerateKeysGrid();
+            IArrayProvider<ChestLockKeyType> keysProviderToSpawn = _chestLockInitiator.GenerateKeysGrid();
             _chestLockKeysGridPanel.Init(_chestLockConfig.ChestLockKeyConfigContainer);
             _chestLockDragHandler = new ChestLockDragHandler(_chestLockPanel, _chestLockInitiator.KeyToChestUnlock, _chestLockConfig.CountKeysToOpenLock, this, ChestLockUnlocked);
             _chestLockPanel.Init(_chestLockInitiator.KeyToChestUnlock, _chestLockConfig.ChestLockKeyConfigContainer, _chestLockDragHandler);
-            _chestLockInitiator.FillGridPanelWithKeys(keysToSpawn);
+            _chestLockInitiator.FillGridPanelWithKeys(keysProviderToSpawn);
             
             base.Show();
         }

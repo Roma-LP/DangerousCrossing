@@ -87,7 +87,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
         }
 
         public async void CallDialog<TArgs>(Type dialogType, TArgs args, Action completeCallback = null,
-            bool onlyOneDialog = false) where TArgs : DialogArgs
+            bool onlyOneDialog = true) where TArgs : DialogArgs
         {
             if (onlyOneDialog && Contains(dialogType))
                 return;
