@@ -11,9 +11,6 @@ namespace _DangerousCrossing.Scripts.Person
         [ShowInInspector, ReadOnly] protected float _currentHealth;
         [ShowInInspector, ReadOnly] private float _maxHealth;
         [SerializeField] private HealthBarUI _healthBarUI;
-        //[SerializeField] private HitFlashEffect _hitFlashEffect;
-
-        //private WorldToUIFollower _worldToUIFollower;
 
         public event Action<float, float> OnHealthChanged;
         public event Action<float> OnTakeDamage;
@@ -39,13 +36,6 @@ namespace _DangerousCrossing.Scripts.Person
         public float MaxHealth => _maxHealth;
         public Transform TargetTransform => transform;
 
-        protected virtual void Awake()
-        {
-            //_hitFlashEffect.Init();
-            //_healthBarUI = SceneContext.Instance.WorldHpBarSpawner.CreateHpBar(_currentHealth, _maxHealth);
-            //_worldToUIFollower = new WorldToUIFollower(_healthBarUI.RectTransformToMove, _pivotUI);
-        }
-
         protected virtual void InitHealthBar(Transform cameraTransform)
         {
             _healthBarUI.Init(cameraTransform);
@@ -63,12 +53,6 @@ namespace _DangerousCrossing.Scripts.Person
             _healthBarUI.OnLateUpdate();
         }
 
-        protected virtual void OnDestroy()
-        {
-            // if (_healthBarUI != null)
-            // Destroy(_healthBarUI.gameObject);
-        }
-
         public void TakeDamage(float amount)
         {
             CurrentHealth -= amount;
@@ -77,8 +61,6 @@ namespace _DangerousCrossing.Scripts.Person
 
         public void TakeHealthZero()
         {
-            //CurrentHealth = 0;
-            //OnHealthZero?.Invoke();
             TakeDamage(CurrentHealth);
         }
         

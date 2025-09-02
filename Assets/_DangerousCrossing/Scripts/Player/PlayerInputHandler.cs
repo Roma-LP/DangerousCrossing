@@ -7,6 +7,7 @@ namespace _DangerousCrossing.Scripts.Player
     public class PlayerInputHandler : MonoBehaviour
     {
         [ShowInInspector, ReadOnly] private float _speed;
+        [ShowInInspector, ReadOnly] private float _rotationSpeed;
         [SerializeField] private Rigidbody _rigidbody;
         
         private IInputReader _input;
@@ -16,31 +17,81 @@ namespace _DangerousCrossing.Scripts.Player
         
         public IInputReader InputReader => _input;
 
-        public void Init(IInputReader input, Transform cameraTransform, float speed)
+        public void Init(IInputReader input, Transform cameraTransform, float speed, float rotationSpeed)
         {
             _input = input;
             _cameraTransform = cameraTransform;
             _speed = speed;
+            _rotationSpeed =  rotationSpeed;
         }
+
+
+        void test()
+        {
+            // Получаем ввод от джойстика
+            Vector2 input = _input.Direction;
+    
+            if (input.sqrMagnitude < 0.01f)
+            {
+                _rigidbody.velocity = new Vector3(0f, _rigidbody.velocity.y, 0f);
+                return;
+            }
+
+            // Получаем направления камеры в мировых координатах
+            Vector3 cameraForward = _cameraTransform.forward;
+            Vector3 cameraRight = _cameraTransform.right;
+
+            // Игнорируем наклон камеры (работаем только в горизонтальной плоскости)
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            // Создаем вектор движения относительно камеры
+            Vector3 moveDirection = (cameraForward * input.y) + (cameraRight * input.x);
+            moveDirection.Normalize();
+
+            // Применяем скорость
+            Vector3 velocity = moveDirection * _speed;
+            _rigidbody.velocity = new Vector3(velocity.x, _rigidbody.velocity.y, velocity.z);
+
+            // Поворот персонажа в направлении движения
+            if (moveDirection.sqrMagnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                _rigidbody.rotation = Quaternion.Slerp(
+                    _rigidbody.rotation, 
+                    targetRotation, 
+                    10 * Time.fixedDeltaTime
+                );
+            }
+        }
+        
 
         public void UpdateInput()
         {
             if (!_isCanMove)
                 return;
-        
-            _moveInput =  _input.Direction * _speed;;
-            _rigidbody.velocity = new Vector3(_moveInput.x, _rigidbody.velocity.y, _moveInput.y);
+
+            _moveInput = _input.Direction;
             
-            // _moveInput =  _input.Direction * _speed;;
-            // _movementVector = new Vector3(_moveInput.x, _rigidbody.velocity.y, _moveInput.y);
-            // //_movementVector = Quaternion.Euler(0, _cameraTransform.transform.eulerAngles.y,0) * _movementVector;
-            // _rigidbody.velocity = _movementVector;
+            Vector3 cameraForward = _cameraTransform.forward;
+            Vector3 cameraRight = _cameraTransform.right;
+
+            cameraForward.y = 0f;
+            cameraRight.y = 0f;
+            cameraForward.Normalize();
+            cameraRight.Normalize();
             
-            Vector3 lookDirection = new Vector3(_moveInput.x, 0, _moveInput.y);
-            if (lookDirection.sqrMagnitude > 0.001f)
+            Vector3 moveDirection = (cameraForward * _moveInput.y) + (cameraRight * _moveInput.x);
+            
+            Vector3 velocity = moveDirection * _speed;
+            _rigidbody.velocity = new Vector3(velocity.x, _rigidbody.velocity.y, velocity.z);
+            
+            if (moveDirection.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-                _rigidbody.rotation = Quaternion.Slerp(_rigidbody.rotation, targetRotation, Time.deltaTime * 10f);
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                _rigidbody.rotation = Quaternion.Slerp(_rigidbody.rotation, targetRotation, _rotationSpeed);
             }
         }
 

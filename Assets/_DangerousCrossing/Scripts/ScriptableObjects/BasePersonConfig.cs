@@ -14,8 +14,10 @@ namespace _DangerousCrossing.Scripts.ScriptableObjects
         [SerializeField, MinValue(0.2)] private float _attackDistance = 0.8f;
         [Header("Movement")]
         [SerializeField, MinValue(1)] private int _movementSpeed = 3;
+        [SerializeField, MinValue(1)] private int _movementRotation = 10;
 
         public int MovementSpeed => _movementSpeed;
+        public int MovementRotation => _movementRotation;
         public float AttackDistance => _attackDistance;
         public int AttackDamage => _attackDamage;
         public float AttackCooldown => _attackCooldown;

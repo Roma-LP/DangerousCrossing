@@ -17,7 +17,7 @@ namespace _DangerousCrossing.Scripts.Player
         public void Init(IInputReader input, Transform cameraTransform, PlayerPersonConfig playerPersonConfig)
         {
             PlayerPersonConfig = playerPersonConfig;
-            _playerInputHandler.Init(input,  cameraTransform, PlayerPersonConfig.MovementSpeed);
+            _playerInputHandler.Init(input,  cameraTransform, PlayerPersonConfig.MovementSpeed, playerPersonConfig.MovementRotation);
             InitHealthBar(cameraTransform);
         }
 

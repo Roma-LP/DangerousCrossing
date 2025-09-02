@@ -34,7 +34,6 @@ public class SceneContext : MonoBehaviour
     private void Start()
     {
         _gamePlaySceneHandler.StartGamePlayScene();
-        _camerasContext.SetFollowCamera(_playerSpawnContext.PlayerPersonInstance.transform);
     }
 
     private void ApplicationSettings()
@@ -49,7 +48,7 @@ public class SceneContext : MonoBehaviour
         _playerSpawnContext.Init(_inputReaderJoystick, _camerasContext.PlayerCamera.transform);
         _enemySpawnContext.Init(_playerSpawnContext.PlayerPersonInstance, _camerasContext.PlayerCamera.transform);
         _gamePlaySceneHandler =
-            new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone,
+            new GamePlaySceneHandler(_playerSpawnContext, _obstacleLineContext, _endObstacleLineZone, _camerasContext,
                 _enemySpawnContext, _dialogService, _chestLockSpawnerContext);
         _chestLockSpawnerContext.Init(_dialogService, _dataStorage);
     }

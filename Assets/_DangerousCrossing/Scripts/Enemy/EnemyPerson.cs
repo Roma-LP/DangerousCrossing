@@ -46,6 +46,7 @@ namespace _DangerousCrossing.Scripts.Enemy
             _playerPerson = _enemySpawnLinks.PlayerPerson;
             _enemyFsm.StartFSM();
             _agent.speed = _enemySpawnLinks.EnemyPersonConfig.MovementSpeed;
+            _agent.angularSpeed = _enemySpawnLinks.EnemyPersonConfig.MovementRotation;
             InitHealthBar(_enemySpawnLinks.CameraTransform);
             ResetCurrentHealth(_enemySpawnLinks.EnemyPersonConfig.CurrentHealth, _enemySpawnLinks.EnemyPersonConfig.MaxHealth);
         }

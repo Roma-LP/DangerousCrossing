@@ -18,3 +18,4 @@ MonoBehaviour:
   _attackDamage: 35
   _attackDistance: 2
   _movementSpeed: 5
+  _movementRotation: 10

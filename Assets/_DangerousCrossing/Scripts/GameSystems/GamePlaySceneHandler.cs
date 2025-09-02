@@ -16,17 +16,19 @@ namespace _DangerousCrossing.Scripts.GameSystems
         private readonly PlayerSpawnContext _playerSpawnContext;
         private readonly EnemySpawnContext _enemySpawnContext;
         private readonly ObstacleLineContext _obstacleLineContext;
+        private readonly CamerasContext _camerasContext;
         private readonly EndObstacleLineZone _endObstacleLineZone;
         private readonly ChestLockSpawnerContext _chestLockSpawnerContext;
         private readonly IDialogService _dialogService;
         private const float _waitTimeToSpawnPlayer = 2f;
 
-        public GamePlaySceneHandler(PlayerSpawnContext playerSpawnContext, ObstacleLineContext obstacleLineContext, EndObstacleLineZone  endObstacleLineZone, EnemySpawnContext enemySpawnContext, IDialogService dialogService, ChestLockSpawnerContext  chestLockSpawnerContext)
+        public GamePlaySceneHandler(PlayerSpawnContext playerSpawnContext, ObstacleLineContext obstacleLineContext, EndObstacleLineZone  endObstacleLineZone, CamerasContext camerasContext, EnemySpawnContext enemySpawnContext, IDialogService dialogService, ChestLockSpawnerContext  chestLockSpawnerContext)
         {
             _playerPersonInstance = playerSpawnContext.PlayerPersonInstance;
             _playerSpawnContext = playerSpawnContext;
             _enemySpawnContext = enemySpawnContext;
             _obstacleLineContext = obstacleLineContext;
+            _camerasContext  = camerasContext;
             _endObstacleLineZone = endObstacleLineZone;
             _dialogService = dialogService;
             _chestLockSpawnerContext = chestLockSpawnerContext;
@@ -40,6 +42,7 @@ namespace _DangerousCrossing.Scripts.GameSystems
         public void StartGamePlayScene()
         {
             RestartLevel();
+            _camerasContext.SetFollowCamera(_playerPersonInstance.transform);
             _obstacleLineContext.Launch();
         }
 

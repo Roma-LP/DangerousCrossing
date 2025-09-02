@@ -18,5 +18,6 @@ MonoBehaviour:
   _attackDamage: 20
   _attackDistance: 0.9
   _movementSpeed: 3
+  _movementRotation: 200
   _delayBeforeTransitInAttack: 3
   _delayBeforeInvokeRemoveInDeath: 3
