@@ -62,7 +62,10 @@ public class SceneContext : MonoBehaviour
     [Button]
     private void TestOpen()
     {
-        _dialogService.CallDialog(typeof(ChestLockDialog));
+        _dialogService.CallDialog<ChestLockDialogArgs>(typeof(ChestLockDialog), new ChestLockDialogArgs()
+        {
+            IDataStorage = _dataStorage
+        });
     }
 
     private void Update()

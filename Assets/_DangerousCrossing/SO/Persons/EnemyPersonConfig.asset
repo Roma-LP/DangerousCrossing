@@ -16,7 +16,7 @@ MonoBehaviour:
   _maxHealth: 100
   _attackCooldown: 3
   _attackDamage: 20
-  _attackDistance: 0.85
+  _attackDistance: 0.9
   _movementSpeed: 3
   _delayBeforeTransitInAttack: 3
   _delayBeforeInvokeRemoveInDeath: 3

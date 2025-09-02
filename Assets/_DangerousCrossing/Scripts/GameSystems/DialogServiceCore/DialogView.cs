@@ -63,7 +63,7 @@ namespace _DangerousCrossing.Scripts.GameSystems.DialogServiceCore
             }
             catch (Exception e)
             {
-                Debug.Log($"Can not cast [{_dialogArgs.GetType().Name}] into [{typeof(TArgs).Name}]");
+                Debug.Log($"Can not cast [{_dialogArgs.GetType().Name}] into [{typeof(TArgs).Name}] ({e.Message})");
             }
 
             return null;
