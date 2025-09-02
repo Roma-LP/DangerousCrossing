@@ -11,7 +11,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         [SerializeField] private GridLayoutGroup grid;
         [SerializeField] private ChestLockKeyUIElement keyPrefab;
         [SerializeField] private ChestLockKeysGridCell _gridCell;
-        [SerializeField] private RectTransform _keysContainer;
+        [SerializeField] private RectTransform _dragKeyContainer;
 
         private ChestLockKeyConfigContainer _configContainer;
         
@@ -23,13 +23,19 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
         public void InstantiateGridWithKeys(IArrayProvider<ChestLockKeyType> keysProvider)
         {
             ChestLockKeyType[] keysToSpawn = keysProvider.GetArray();
-            return;
+          
             foreach (ChestLockKeyType lockKeyType in keysToSpawn)
             {
+                
+                ChestLockKeyConfig chestLockKeyConfig = _configContainer.GetKeyConfigByKeyType(lockKeyType);
+
                 ChestLockKeysGridCell cell = Instantiate(_gridCell, grid.transform);
-                ChestLockKeyUIElement key = Instantiate(keyPrefab);
-                key.Init(_configContainer.GetKeyConfigByKeyType(lockKeyType), _keysContainer, cell);
-                cell.SetKey(key);
+                cell.InitCell(chestLockKeyConfig, _dragKeyContainer);
+                
+                // ChestLockKeysGridCell cell = Instantiate(_gridCell, grid.transform);
+                // ChestLockKeyUIElement key = Instantiate(keyPrefab);
+                // key.Init(_configContainer.GetKeyConfigByKeyType(lockKeyType), _keysContainer, cell);
+                // cell.SetKey(key);
             }
         }
     }

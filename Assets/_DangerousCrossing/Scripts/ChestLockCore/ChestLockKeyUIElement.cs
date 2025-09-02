@@ -38,7 +38,6 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             _chestLockKeysGridCell = keyGridCell;
             KeyType = config.ChestLockKeyType;
             SetSprites(config);
-            //keyGridCell.SetKey(this);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -61,7 +60,7 @@ namespace _DangerousCrossing.Scripts.ChestLockCore
             SetRaycastTarget(true);
             if (isUsed) return;
             
-            _chestLockKeysGridCell.SetKey(this);
+            _chestLockKeysGridCell.SetKeyPositionInCell(this);
         }
 
         public void MarkAsUsed()
