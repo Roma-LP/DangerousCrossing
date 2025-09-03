@@ -7,7 +7,6 @@ using _DangerousCrossing.Scripts.Interfaces;
 using _DangerousCrossing.Scripts.ObstacleLineCore;
 using _DangerousCrossing.Scripts.Player;
 using _DangerousCrossing.Scripts.UI;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class SceneContext : MonoBehaviour
@@ -56,22 +55,5 @@ public class SceneContext : MonoBehaviour
     private void OnDestroy()
     {
         _gamePlaySceneHandler.Dispose();
-    }
-
-    [Button]
-    private void TestOpen()
-    {
-        _dialogService.CallDialog<ChestLockDialogArgs>(typeof(ChestLockDialog), new ChestLockDialogArgs()
-        {
-            IDataStorage = _dataStorage
-        });
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            TestOpen();
-        }
     }
 }
